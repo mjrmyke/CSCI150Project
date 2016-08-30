@@ -1,0 +1,10 @@
+application: csci150project
+version: 0
+runtime: go
+api_version: go1
+
+handlers:
+- url: /public/*
+  static_dir: public
+- url: /.*
+  script: _go_app

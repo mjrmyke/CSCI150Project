@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 // Reference Multiplexer functions in other modules here.
 // Those functions splinter off the handlers.
-func MultiPlexer(r *httprouter.Router){
+func MultiPlexer(r *httprouter.Router) {
 	Handle_CORE(r)
+	INIT_AUTH_HANDLERS(r)
 }
 
 // Init do not touch.

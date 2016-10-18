@@ -47,7 +47,7 @@ func AUTH_GET_Login(res http.ResponseWriter, req *http.Request, params httproute
 		return
 	}
 
-	ServeTemplateWithParams(res, "login", struct {
+	ServeTemplateWithParams(res, "login.gohtml", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{
@@ -93,7 +93,7 @@ func AUTH_POST_Login(res http.ResponseWriter, req *http.Request, params httprout
 //=========================================================================================
 func AUTH_GET_ElevatedLogin(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 
-	ServeTemplateWithParams(res, "login", struct {
+	ServeTemplateWithParams(res, "login.gohtml", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{
@@ -167,7 +167,7 @@ func AUTH_GET_Register(res http.ResponseWriter, req *http.Request, params httpro
 		http.Redirect(res, req, "/"+req.FormValue("redirect"), http.StatusSeeOther)
 		return
 	}
-	ServeTemplateWithParams(res, "user-register", struct {
+	ServeTemplateWithParams(res, "register.gohtml", struct {
 		HeaderData
 		BusinessKey, ErrorResponse, RedirectURL string
 	}{

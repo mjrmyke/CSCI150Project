@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title> Login Form</title>
+    <link rel="stylesheet" href="public/assets/css/login.css" />
+    <link rel="stylesheet" href="public/assets/css/main.css" />
+</head>
+
+<body>
+{{ template "header"}}
+
+<div id="wrapper">
+  <div id="main">
+    <div id="login-left">
+      <div class="join">Login</div>
+      <div class="lock"></div>
+      <div class="clr"></div>
+      <div class="login-options">Choose one of the following login methods.</div>
+      <ul class="actions">
+        <li><a id="dropbox" href="#"><img src="public/assets/images/dropbox.svg" alt="" />Dropbox</a></li>
+        <li><a id="github" href="#"><img src="public/assets/images/github.svg" alt="" />GitHub</a></li>
+        <li><a id="google" href="#"><img src="public/assets/images/google-plus.svg" alt="" />Google+</a></li>
+      </ul>
+      <div class="clr"><hr /></div>
+      <div class="mail-text">Or login with your username and password:</div>
+      <div class="forms">
+        <form action="" method="get" name="register">
+            <input name="username" type="text" placeholder="Enter your username..." size="70"  id="user"/>
+            <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
+        </form>
+      </div>
+      <ul class="actions">
+        <li><a href="login.gohtml" class="button">Login</a></li>
+        <li><a href="register.gohtml" class="button">Sign up</a></li>
+      </ul>
+    </div>
+    <div id="login-right">
+      {{template "pencil"}}
+    </div>
+  </div>
+
+
+
+
+</div>
+</body>

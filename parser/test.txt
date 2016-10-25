@@ -1,0 +1,72 @@
+# H1 
+
+## H2
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+H1
+==
+
+H2
+--
+
+_italics_
+
+*italics*
+
+**bold**
+
+__bold__
+
+1. Ordered List Item
+2. Another Item 
+ <ul>
+   <li>Sub List Item - TEST FAILED, needs explicit HTML</li>
+ </ul>
+1. Number doesn't matter.
+ <ol>
+   <li>Ordered Sublist - TEST FAILED, needs explicit HTML</li>
+   <li>Another sublist item - TEST FAILED, needs explicit HTML</li>
+ </ol>
+4. Another Item
+
++ Unordered Item
+- Unordered Item2
+* Unordered Item3
+
+[Inline Link](http://www.google.com)
+[Inline Link](http://www.google.com "i'm a title")
+
+http://www.example.com
+
+<http://www.example.com>
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+`code`
+
+> Blockquotes
+
+
+
+- [ ]
+- [x]
+
+
+<!-- Difficult to Come up with a clean way. Some inline html is fine though so long as script is escaped. -->
+
+<audio controls>
+ <source src="http://example.com/example.ogg" type="audio/ogg">
+</audio>
+
+<video width="100" height="100" controls>
+ <course src="http://example.com/example.mp4" type="video/mp4">
+</video>
+
+<script>alert(666);</script>

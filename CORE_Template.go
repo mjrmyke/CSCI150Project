@@ -63,8 +63,8 @@ func parse(inp string) string {
 	data := []byte(inp)															// Convert to Byte
 	regex , _ := regexp.Compile("[sS][cC][rR][iI][pP][tT]")						// Escape Script Tag
 	data = regex.ReplaceAll(data,[]byte("&#115;&#99;&#114;&#105;&#112;&#116;")) 
-	regex , _ := regexp.Compile("[iI][fF][rR][aA][mM][eE]")						// Escape Iframe Tag
-	data = regex.ReplaceAll(data,[]byte("&#105;&#102;&#114;&#97;&#109;&#101;")) 
+	regex2 , _ := regexp.Compile("[iI][fF][rR][aA][mM][eE]")						// Escape Iframe Tag
+	data = regex2.ReplaceAll(data,[]byte("&#105;&#102;&#114;&#97;&#109;&#101;")) 
 	data = blackfriday.MarkdownCommon(data)										// Get Common Markdown from russross's parser
 	return string(data)
 }

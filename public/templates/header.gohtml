@@ -4,17 +4,18 @@
     <li id="first">
       <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a></li>
       {{if .User.Email}}
-      <a id="profile-img" href="/profile">
-        {{if .Avatar}}
-        <img src="{{getAvatarURL .IntID}}" alt="Avatar Image" class="user-avatar">
-        {{else}}
-<span class="icon fa-user"></span>
-        {{end}}      </a>
+      <li id="second">
+        <dropdown>
+          <input id="toggle2" type="checkbox">
+          <label for="toggle2" class="animate">Hello, {{ .User.First}}! <i id="profile-picture" class="fa fa-user"></i></label>
+          <ul class="animate">
+            <a href="/profile" class="animate"><i class="fa fa-user"></i>View Profile</a>
+            <a href="/logout?redirect={{.CurrentPath}}" class="animate"><i class="fa fa-mail-reply"></i>Logout</a>
+          </ul>
+        </dropdown>
+      </li>
       {{else}}
-      </a>
-      <!-- <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a></li> -->
-      <li id="first">
-      <a href="/login?redirect={{.CurrentPath}}"><span class="icon fa-user"></span><span class="desktop">Login/Register</span></a></li>
+      <li><a href="/login?redirect={{.CurrentPath}}"><span class="icon fa-user"></span><span class="desktop">Login/Register</span></a></li>
       {{end}}
   </ul>
 </nav>

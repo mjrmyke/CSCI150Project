@@ -13,10 +13,154 @@
     padding-right: 1rem;
 }
 
+i#profile-picture {
+    padding: 0 1px 0 0;
+    background-color: #adadad;
+    color: #e7ebec;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border: solid 1px rgba(128, 128, 128, 0);
+    border-radius: 100%;
+    display: flex;
+    text-align: center;
+}
+
 #nav span.icon.fa-user {
   font-size: 2rem;
   padding-right: 1rem;
 }
+
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
+}
+.float-right{
+  float: right;
+}
+.fa {
+    font-size: 1.3rem;
+    width: 50px;
+    padding-right: 30px;
+}
+
+a.animate {
+  width: 250px;
+  justify-content: flex-start !important;
+  align-items: center;
+  line-height: 20px !important;
+  padding: 20px !important;
+  border-radius: 0 !important;
+  border-left: solid 5px #b8abdc !important;
+}
+
+a.animate:hover {
+    background-color: #8d7bb1 !important;
+    color: white !important;
+}
+
+li#second {
+    position: absolute;
+    right: 1rem;
+    top: .5rem;
+}
+
+dropdown {
+    display: inline-block;
+}
+dropdown label, dropdown ul a {
+    display: block;
+    font-size:16px;
+    width: 200px;
+    background: #ECF0F1;
+    padding: 15px 20px !important;
+}
+dropdown label:hover, dropdown ul a:hover{
+  background: #8171ad;
+  color: #fff;
+  cursor: pointer;
+}
+
+dropdown label:hover > #profile-picture{
+  background-color: #b8abdc;
+}
+
+dropdown label {
+    color: #grey;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    height: 4em;
+    width: 250px;
+    margin: 0;
+    padding: 0 2rem !important;
+    font-weight: 100;
+}
+
+dropdown input:checked + label #profile-picture {
+    background-color: #b8abdc;
+}
+
+dropdown input{
+  display: none;
+}
+
+dropdown input ~ ul{
+  flex-direction: column;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 64px !important;
+  z-index: 1;
+}
+dropdown input:checked + label {
+  background: #8171ad;
+  color: white;
+}
+
+dropdown input:checked ~ ul{
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+$colors: #E74C3C, #0072B5, #2C3E50;
+
+@for $i from 1 through length($colors) {
+  dropdown ul li:nth-child(#{$i}) {
+    border-left: 4px solid nth($colors, $i);
+    .fa{
+      color: nth($colors, $i);
+    }
+    &:hover {
+        background: nth($colors, $i);
+        color: white;
+      .fa{
+        color: white;
+      }
+    }
+  }
+}
+
+.animate{
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -ms-transition: all .3s;
+  transition: all .3s;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden; /* Chrome and Safari */
+  -moz-backface-visibility:hidden; /* Firefox */
+  -ms-backface-visibility:hidden; /* Internet Explorer */
+}
+
+.show {display:block;}
 
 /* Reset */
 
@@ -2142,140 +2286,6 @@
 		padding: 0.75em 1em;
 	}
 
-	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
-	}
-
-		input[type="checkbox"] + label,
-		input[type="radio"] + label {
-			text-decoration: none;
-			cursor: pointer;
-			display: inline-block;
-			font-size: 1em;
-			font-weight: 300;
-			padding-left: 2.4em;
-			padding-right: 0.75em;
-			position: relative;
-		}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				-moz-osx-font-smoothing: grayscale;
-				-webkit-font-smoothing: antialiased;
-				font-family: FontAwesome;
-				font-style: normal;
-				font-weight: normal;
-				text-transform: none !important;
-			}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				border-radius: 8px;
-				border: solid 1px;
-				content: '';
-				display: inline-block;
-				height: 1.65em;
-				left: 0;
-				line-height: 1.58125em;
-				position: absolute;
-				text-align: center;
-				top: 0;
-				width: 1.65em;
-			}
-
-		input[type="checkbox"]:checked + label:before,
-		input[type="radio"]:checked + label:before {
-			content: '\f00c';
-		}
-
-	input[type="checkbox"] + label:before {
-		border-radius: 8px;
-	}
-
-	input[type="radio"] + label:before {
-		border-radius: 100%;
-	}
-
-	::-webkit-input-placeholder {
-		opacity: 1.0;
-	}
-
-	:-moz-placeholder {
-		opacity: 1.0;
-	}
-
-	::-moz-placeholder {
-		opacity: 1.0;
-	}
-
-	:-ms-input-placeholder {
-		opacity: 1.0;
-	}
-
-	.formerize-placeholder {
-		opacity: 1.0;
-	}
-
-	label {
-		color: #ffffff;
-	}
-
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	select,
-	textarea {
-		background: rgba(255, 255, 255, 0.075);
-		border-color: rgba(255, 255, 255, 0.35);
-	}
-
-		input[type="text"]:focus,
-		input[type="password"]:focus,
-		input[type="email"]:focus,
-		select:focus,
-		textarea:focus {
-			border-color: #8cc9f0;
-			box-shadow: 0 0 0 1px #8cc9f0;
-		}
-
-	.select-wrapper:before {
-		color: rgba(255, 255, 255, 0.35);
-	}
-
-	input[type="checkbox"] + label,
-	input[type="radio"] + label {
-		color: rgba(255, 255, 255, 0.65);
-	}
-
-		input[type="checkbox"] + label:before,
-		input[type="radio"] + label:before {
-			background: rgba(255, 255, 255, 0.075);
-			border-color: rgba(255, 255, 255, 0.35);
-		}
-
-	input[type="checkbox"]:checked + label:before,
-	input[type="radio"]:checked + label:before {
-		background-color: #ffffff;
-		border-color: #ffffff;
-		color: #935d8c;
-	}
-
-	input[type="checkbox"]:focus + label:before,
-	input[type="radio"]:focus + label:before {
-		border-color: #8cc9f0;
-		box-shadow: 0 0 0 1px #8cc9f0;
-	}
-
 	::-webkit-input-placeholder {
 		color: rgba(255, 255, 255, 0.5) !important;
 	}
@@ -3302,7 +3312,8 @@
 				-webkit-transition: margin 0.2s ease;
 				-ms-transition: margin 0.2s ease;
 				transition: margin 0.2s ease;
-				display: inline-block;
+        display: flex;
+        align-items: center;
 				margin: 0 0.35em;
 				padding: 0;
 				vertical-align: middle;
@@ -3358,11 +3369,11 @@
 			}
 
 			#nav ul li a {
-    		border: solid 1px;
+    		border: solid 1px #fff !important;
     		border-radius: 100%;
     		align-items: center;
     		padding: .5rem;
-    		height: 60px;
+    		height: 60px !important;
     		width: 60px;
 			}
 

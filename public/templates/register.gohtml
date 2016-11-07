@@ -2,7 +2,8 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>Register Form</title>
+
+    <title>Register</title>
     <link rel="stylesheet" href="public/assets/css/login.css" />
     <link rel="stylesheet" href="public/assets/css/main.css" />
 </head>
@@ -13,27 +14,29 @@
 <div id="wrapper">
   <div id="main">
     <div id="login-left">
-      <div class="join">Login</div>
+      <div class="join">Register</div>
       <div class="lock"></div>
       <div class="clr"></div>
       <div class="login-options">Choose one of the following register methods.</div>
       <ul class="actions">
-        <li><a id="dropbox" href="/login/dropbox/oauth/send"><img src="public/assets/images/dropbox.svg" alt="" />Dropbox</a></li>
-        <li><a id="github" href="/login/github/oauth/send"><img src="public/assets/images/github.svg" alt="" />GitHub</a></li>
-      <div class="clr"><hr /></div>
-      <div class="mail-text">Or register with your username and password:</div>
-      <div class="forms">
-        <form action="/register" method="POST" name="register">
-            <input name="email" type="email" placeholder="Enter your email..." size="70"  id="user"/>
-            <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
-            <input name="password2" type="password" placeholder="Confirm your password..." size="70"  id="password"/>
-
-      </div>
-      <ul class="actions">
-        <li><a href="/register" class="button">Sign up</a></li>
-        <li><a href="/login" class="button">Login</a></li>
+        <li><a id="dropbox" href="#"><img src="public/assets/images/dropbox.svg" alt="" />Dropbox</a></li>
+        <li><a id="github" href="#"><img src="public/assets/images/github.svg" alt="" />GitHub</a></li>
+        <li><a id="google" href="#"><img src="public/assets/images/google-plus.svg" alt="" />Google+</a></li>
       </ul>
-      </form>
+      <div class="mail-text">Or sign up using your email address.</div>
+      <div class="forms">
+        <form action="" method="post" name="register">
+            <input name="first" type="text" placeholder="Enter your first name..." size="70"  id="first-name"/>
+            <input name="last" type="text" placeholder="Enter your last name..." size="70"  id="last-name"/>
+            <input name="email" type="text" placeholder="Enter your email address..." size="70"  id="mail"/>
+            <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
+            <input name="cpassword" type="password" placeholder="Confirm password..." size="70"  id="cpassword"/>
+            <input type="hidden" id="redirect" name="redirect" value="{{.RedirectURL}}">
+            <ul class="actions">
+              <li><input type="submit" value="Sign Up"></li>
+            </ul>
+        </form>
+      </div>
     </div>
     <div id="login-right">
       {{template "pencil"}}
@@ -45,3 +48,4 @@
 
 </div>
 </body>
+</html>

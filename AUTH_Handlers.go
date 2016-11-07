@@ -181,8 +181,8 @@ func AUTH_POST_Register(res http.ResponseWriter, req *http.Request, params httpr
 	ctx := appengine.NewContext(req)
 	nu := &User{ // Make the New User
 		Email:    strings.ToLower(req.FormValue("email")),
-		First:    req.FormValue("given-name"),
-		Last:     req.FormValue("family-name"),
+		First:    req.FormValue("first"),
+		Last:     req.FormValue("last"),
 		Customer: "",
 	}
 

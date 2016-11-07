@@ -2,7 +2,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title> Login Form</title>
+    <title>Login</title>
     <link rel="stylesheet" href="public/assets/css/login.css" />
     <link rel="stylesheet" href="public/assets/css/main.css" />
 </head>
@@ -25,15 +25,16 @@
       <div class="clr"><hr /></div>
       <div class="mail-text">Or login with your username and password:</div>
       <div class="forms">
-        <form action="" method="get" name="register">
-            <input name="username" type="text" placeholder="Enter your username..." size="70"  id="user"/>
+        <form action="" method="post" name="login">
+            <input name="email" type="text" placeholder="Enter your Email..." size="70"  id="mail"/>
             <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
+            <input type="hidden" id="redirect" name="redirect" value="{{.RedirectURL}}">
+            <ul class="actions">
+              <li><input type="submit" value="Login"></li>
+              <li><a href="/register?redirect={{.CurrentPath}}" class="button">Sign up</a></li>
+            </ul>
         </form>
       </div>
-      <ul class="actions">
-        <li><a href="login.gohtml" class="button">Login</a></li>
-        <li><a href="register.gohtml" class="button">Sign up</a></li>
-      </ul>
     </div>
     <div id="login-right">
       {{template "pencil"}}
@@ -45,3 +46,4 @@
 
 </div>
 </body>
+</html>

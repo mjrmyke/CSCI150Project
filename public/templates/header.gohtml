@@ -3,7 +3,19 @@
   <ul>
     <li id="first">
       <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a></li>
-    <li><a href="/login"><span class="icon fa-user"></span><span class="desktop">Login/Register</span></a></li>
+      {{if .User.Email}}
+      <a id="profile-img" href="/profile">
+        {{if .Avatar}}
+        <img src="{{getAvatarURL .IntID}}" alt="Avatar Image" class="user-avatar">
+        {{else}}
+<span class="icon fa-user"></span>
+        {{end}}      </a>
+      {{else}}
+      </a>
+      <!-- <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a></li> -->
+      <li id="first">
+      <a href="/login?redirect={{.CurrentPath}}"><span class="icon fa-user"></span><span class="desktop">Login/Register</span></a></li>
+      {{end}}
   </ul>
 </nav>
 {{ end }}

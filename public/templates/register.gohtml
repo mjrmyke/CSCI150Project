@@ -2,36 +2,46 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>Custom Login Form</title>
-
-    <link rel="stylesheet" type="text/css" href="../public/css/style.css">
-
+    <title>Register Form</title>
+    <link rel="stylesheet" href="public/assets/css/login.css" />
+    <link rel="stylesheet" href="public/assets/css/main.css" />
 </head>
 
 <body>
+{{ template "header"}}
 
 <div id="wrapper">
-    <div class="join">Join Today</div>
-    <div class="lock"></div>
-    <div class="clr"></div>
-    <div class="login-options">Choose one of the following sign up methods.</div>
-    <a class="dropbox" href="#">Dropbox</a>
-    <a class="github" href="#">GitHub</a>
-    <a class="google" href="#">Google+</a>
-    <div class="clr"><hr /></div>
-    <div class="mail-text">Or sign up using your email address.</div>
-    <div class="forms">
-        <form action="" method="get" name="register">
-            <input name="Full name" type="text" placeholder="Enter your full name..." size="70"  id="name"/>
-            <input name="username" type="text" placeholder="Enter your username..." size="70"  id="user"/>
-            <input name="email" type="text" placeholder="Enter your email address..." size="70"  id="mail"/>
+  <div id="main">
+    <div id="login-left">
+      <div class="join">Login</div>
+      <div class="lock"></div>
+      <div class="clr"></div>
+      <div class="login-options">Choose one of the following register methods.</div>
+      <ul class="actions">
+        <li><a id="dropbox" href="/login/dropbox/oauth/send"><img src="public/assets/images/dropbox.svg" alt="" />Dropbox</a></li>
+        <li><a id="github" href="/login/github/oauth/send"><img src="public/assets/images/github.svg" alt="" />GitHub</a></li>
+      <div class="clr"><hr /></div>
+      <div class="mail-text">Or register with your username and password:</div>
+      <div class="forms">
+        <form action="/register" method="POST" name="register">
+            <input name="email" type="email" placeholder="Enter your email..." size="70"  id="user"/>
             <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
-        </form>
+            <input name="password2" type="password" placeholder="Confirm your password..." size="70"  id="password"/>
+
+      </div>
+      <ul class="actions">
+        <li><a href="/register" class="button">Sign up</a></li>
+        <li><a href="/login" class="button">Login</a></li>
+      </ul>
+      </form>
     </div>
-    <a class="create-acc" href="register.html">Create My Account</a>
-    <a class="sign-up" href="login.html">Login!</a>
+    <div id="login-right">
+      {{template "pencil"}}
+    </div>
+  </div>
+
+
+
 
 </div>
-
 </body>
-</html>

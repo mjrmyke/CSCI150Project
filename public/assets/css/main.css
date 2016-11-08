@@ -30,7 +30,8 @@ i#profile-picture {
 }
 
 #nav span.icon.fa-user {
-    display:none;
+  font-size: 2rem;
+  padding-right: 1rem;
 }
 
 *{

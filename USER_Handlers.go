@@ -151,7 +151,7 @@ func USERS_GET_Profile(res http.ResponseWriter, req *http.Request, params httpro
 	}
 	ctx := appengine.NewContext(req)
 	log.Infof(ctx, "Request query string is: %s", req.URL.Query())
-	ServeTemplateWithParams(res, "user-profile.gohtml", struct {
+	ServeTemplateWithParams(res, "profile.gohtml", struct {
 		HeaderData
 		ErrorResponseProfile string
 	}{
@@ -175,13 +175,13 @@ func USERS_GET_ProfileView(res http.ResponseWriter, req *http.Request, params ht
 		return
 	}
 	screen := struct {
-		*HeaderData
+		HeaderData
 		Data *User
 	}{
-		MakeHeader(res, req, true, true),
+		*MakeHeader(res, req, true, true),
 		ci,
 	}
-	ServeTemplateWithParams(res, "user-profile-view.gohtml", screen)
+	ServeTemplateWithParams(res, "user-profile.gohtml", screen)
 }
 
 //===========================================================================

@@ -3,14 +3,11 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/Esseh/retrievable"
-	"github.com/julienschmidt/httprouter"
-	"golang.org/x/net/context"
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/datastore"
-	"net/http"
-	"strconv"
 	"time"
+
+	"github.com/Esseh/retrievable"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/datastore"
 )
 
 var (
@@ -30,8 +27,8 @@ type (
 		Questions         int64
 		retrievable.IntID `datastore:"-" json:"-"`
 	}
-	RecentlyViewed struct{ CID []int64 } // Holds recently viewed course information.
-	EncryptedUser  struct {
+	// RecentlyViewed struct{ CID []int64 } // Holds recently viewed course information.
+	EncryptedUser struct {
 		First, Last string
 		Email       string
 		Avatar      bool `datastore:",noindex"`
@@ -45,11 +42,15 @@ type (
 
 // int64 Keys
 func (u *User) Key(ctx context.Context, key interface{}) *datastore.Key {
-	return datastore.NewKey(ctx, UsersTable, "", int64(key.(retrievable.IntID)), nil)
+	if v, ok := key.(retrievable.IntID); ok {
+		return datastore.NewKey(ctx, UsersTable, "", int64(v), nil)
+	}
+	return datastore.NewKey(ctx, UsersTable, "", key.(int64), nil)
 }
-func (r *RecentlyViewed) Key(ctx context.Context, key interface{}) *datastore.Key {
-	return datastore.NewKey(ctx, RecentlyViewedTable, "", key.(int64), nil)
-}
+
+// func (r *RecentlyViewed) Key(ctx context.Context, key interface{}) *datastore.Key {
+// 	return datastore.NewKey(ctx, RecentlyViewedTable, "", key.(int64), nil)
+// }
 
 func (u *User) toEncrypt() (*EncryptedUser, error) {
 	e := &EncryptedUser{
@@ -117,42 +118,4 @@ func (u *User) Load(ps []datastore.Property) error {
 		return err
 	}
 	return u.fromEncrypt(e)
-}
-
-// Gets the user's most recently viewed courses.
-func (r *RecentlyViewed) Get(req *http.Request) (context.Context, int64, error) {
-	u, _ := GetUserFromSession(req)
-	ctx := appengine.NewContext(req)
-	getErr := retrievable.GetEntity(ctx, u.IntID, r)
-	if getErr != nil {
-		_, placeErr := retrievable.PlaceEntity(ctx, u.IntID, r)
-		if placeErr != nil {
-			return ctx, int64(u.IntID), placeErr
-		}
-	}
-	return ctx, int64(u.IntID), nil
-}
-
-// Updates the user's most recently viewed courses.
-func (r *RecentlyViewed) Update(req *http.Request, p httprouter.Params) error {
-	ctx, k, err := r.Get(req)
-	if err != nil {
-		return err
-	}
-
-	v, valErr := strconv.ParseInt(p.ByName("ID"), 10, 64)
-	if valErr != nil {
-		return valErr
-	}
-	if len(r.CID) > 7 {
-		r.CID = append([]int64{v}, r.CID[:len(r.CID)-2]...)
-	} else {
-		r.CID = append([]int64{v}, r.CID...)
-	}
-
-	_, placeErr := retrievable.PlaceEntity(ctx, k, r)
-	if placeErr != nil {
-		return placeErr
-	}
-	return nil
 }

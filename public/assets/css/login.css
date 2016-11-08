@@ -19,6 +19,10 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
+li input{
+  margin:0 !important;
+}
+
 div#main {
     display: flex;
     padding: 4rem 0 2rem 5rem;
@@ -66,7 +70,6 @@ table {
 /* Reset End */
 .clr { clear: both;}
 body {
-    background: #e0e0e0 !important;
     margin: 0 auto;
     padding: 0 auto;
     font-family: 'Open Sans', sans-serif;
@@ -178,7 +181,6 @@ body {
     width:500px;
 }
 .forms input {
-    border: 1px solid #d9d9d9 !important;
     color: #bebebe;
     padding: 7px 0px 7px 50px;
     outline:none;
@@ -369,4 +371,39 @@ body {
   position:absolute;
   animation: scale 3s ease-in-out infinite ;
   animation-direction:alternate;
+}
+
+@media screen and (max-width: 900px)
+{
+#pencil{
+  display:none;
+}
+
+div#main {
+    padding: 4rem 5rem 2rem 5rem;
+}
+
+#login-left{
+  width:100%;
+}
+#login-right{
+  width: 0 !important;
+}
+}
+
+@media screen and (max-width: 736px)
+{
+  ul.actions {
+      display: flex;
+      flex-direction: column;
+    }
+  ul.actions li{
+      padding: 1em 0 0 0 !important;
+    }
+  .forms{
+      width: 100%;
+  }
+  #main input[type="submit"], #main input[type="reset"], #main input[type="button"], #main button, #main .button{
+    width:100%;
+  }
 }

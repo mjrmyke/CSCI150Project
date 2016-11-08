@@ -13,5 +13,9 @@ func Handle_CORE(r *httprouter.Router) {
 
 // Serves the index page.
 func index(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	ServeTemplateWithParams(res, "index.gohtml", nil)
+	ServeTemplateWithParams(res, "index.gohtml", struct {
+		HeaderData
+	}{
+		*MakeHeader(res, req, true, true),
+	})
 }

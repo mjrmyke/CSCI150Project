@@ -686,6 +686,15 @@ $colors: #E74C3C, #0072B5, #2C3E50;
 
 	@media screen and (max-width: 1280px) {
 
+    dropdown label{
+      height: 3em;
+
+    }
+
+    dropdown input ~ ul {
+      top: 48px !important;
+    }
+
 		.row > * {
 			padding: 0 0 0 1.5em;
 		}
@@ -1119,6 +1128,42 @@ $colors: #E74C3C, #0072B5, #2C3E50;
 		.row > * {
 			padding: 0 0 0 1em;
 		}
+
+    dropdown label {
+      background-color: transparent;
+      width: 60px;
+      height: 60px;
+      padding: 0 !important;
+      position: inherit;
+    }
+
+    dropdown label span{
+      display:none;
+    }
+
+    i#profile-picture {
+      width: 60px;
+      height: 60px;
+      background-color: transparent;
+      border: solid 1px;
+    }
+
+    dropdown input ~ ul {
+    }
+
+    dropdown input:checked + label {
+    background:none;
+    color: white;
+    }
+
+    dropdown input:hover + label {
+    background:none;
+    color: white;
+    }
+
+    #second {
+      right:none;
+    }
 
 		.row {
 			margin: 0 0 -1px -1em;

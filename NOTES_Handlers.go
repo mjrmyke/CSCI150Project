@@ -12,7 +12,6 @@ const (
 
 func INIT_NOTES_HANDLERS(r *httprouter.Router) {
 	r.GET(PATH_NOTES_document, NOTES_GET_DOCUMENT) // PATH_AUTH_Login 				= "/login"
-	// r.POST(PATH_AUTH_Login, AUTH_POST_Login)                   //
 }
 
 func NOTES_GET_DOCUMENT(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
@@ -22,7 +21,7 @@ func NOTES_GET_DOCUMENT(res http.ResponseWriter, req *http.Request, params httpr
 		return
 	}
 
-	ServeTemplateWithParams(res, "papersheet.gohtml", struct {
+	ServeTemplateWithParams(res, "document.gohtml", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="pencil" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="85px" height="85px" viewBox="0 0 85 85" enable-background="new 0 0 85 85" xml:space="preserve">
+<path fill="#F2B6E0" d="M29.593,20.696c0,0-1.438-8.813,0-10.706c4.563-6.005,21.25-6.005,25.813,0c1.438,1.893,0,10.706,0,10.706
+	l-0.739,5H30.334L29.593,20.696z"/>
+<path fill="#E5B55E" d="M55.359,33.47v22.99l0.039,0.012L42.521,59.71l-12.919-3.25v-23v-3.47V25.1h25.758v4.67V33.47z"/>
+<polygon fill="#EABB78" points="36.046,25.1 36.046,56.46 36.026,56.471 29.597,59.71 29.597,25.1 "/>
+<polygon fill="#D6A456" points="55.356,25.1 55.356,59.71 48.927,56.471 48.907,56.46 48.907,25.1 "/>
+<rect x="29.593" y="20.696" fill="#A3A3A3" width="25.813" height="4.408"/>
+<rect x="29.593" y="20.696" fill="#A0A0A0" width="6.457" height="4.404"/>
+<rect x="48.904" y="20.696" fill="#A0A0A0" width="6.455" height="4.404"/>
+<polygon fill="#F9F7E1" points="55.41,59.71 42.515,77.25 29.62,59.7 36.05,56.46 42.512,59.71 48.93,56.471 48.95,56.46
+	55.359,59.68 55.38,59.7 "/>
+<polygon fill="#EDE9DF" points="55.41,59.71 45.21,75.359 43.66,75.359 48.95,56.46 "/>
+<polygon fill="#FFFBEE" points="41.34,75.359 39.79,75.359 29.59,59.71 36.05,56.46 "/>
+<polygon fill="#4D5051" points="45.21,75.359 42.5,79.51 39.79,75.359 "/>
+<path class="eye" fill="#FFFFFF" d="M53.023,29.275c0,4.31-1.721,5.67-3.58,5.73c-2.82,0.11-5.98-2.74-4-2.74c1.369,0,2.779-0.43,4-0.96
+	C51.483,30.435,53.023,29.275,53.023,29.275z"/>
+<line opacity="0.11" fill="none" stroke="#000000" stroke-width="0.25" stroke-miterlimit="10" enable-background="new    " x1="29.593" y1="22.203" x2="55.406" y2="22.203"/>
+<line opacity="0.11" fill="none" stroke="#000000" stroke-width="0.25" stroke-miterlimit="10" enable-background="new    " x1="29.593" y1="23.714" x2="55.406" y2="23.714"/>
+<path class="eye" fill="#FFFFFF" d="M36.074,34.995c-0.26,0.03-0.52,0.03-0.78-0.01c-0.19-0.01-0.38-0.05-0.57-0.1
+	c-0.49-0.13-0.95-0.38-1.34-0.78c-0.28-0.28-0.53-0.63-0.74-1.07c-0.42-0.88-0.67-2.1-0.67-3.76c0,0,0.01,0,0.02,0.02
+	c0.01,0.01,0.03,0.02,0.06,0.04c0.06,0.04,0.17,0.12,0.31,0.22c0.08,0.05,0.18,0.12,0.28,0.19c0.73,0.48,1.99,1.23,3.43,1.78
+	c1.1,0.43,2.31,0.74,3.47,0.74C41.404,32.265,38.734,34.785,36.074,34.995z"/>
+</svg>

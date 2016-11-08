@@ -1,0 +1,107 @@
+// Contains the handlers for our OAuth interactions.
+package main
+import (
+	"net/http"
+	"github.com/julienschmidt/httprouter"
+	"github.com/Esseh/goauth"
+)
+
+func init(){
+	goauth.GlobalSettings.ClientType = "appengine"
+}
+
+const(
+	PATH_AUTH_OAUTH_GOOGLE_Recieve  = "/login/google/oauth/recieve"
+	PATH_AUTH_OAUTH_GOOGLE_Send     = "/login/google/oauth/send"
+	PATH_AUTH_OAUTH_GITHUB_Recieve  = "/login/github/oauth/recieve"
+	PATH_AUTH_OAUTH_GITHUB_Send     = "/login/github/oauth/send"
+	PATH_AUTH_OAUTH_DROPBOX_Send    = "/login/dropbox/oauth/send"
+	PATH_AUTH_OAUTH_DROPBOX_Recieve = "/login/dropbox/oauth/recieve"
+)
+
+func INIT_OAUTH_Handlers(r *httprouter.Router){
+	r.GET(PATH_AUTH_OAUTH_GITHUB_Send, AUTH_OAUTH_GITHUB_Send)
+	r.GET(PATH_AUTH_OAUTH_GITHUB_Recieve, AUTH_OAUTH_GITHUB_Recieve)
+	r.GET(PATH_AUTH_OAUTH_DROPBOX_Send, AUTH_OAUTH_DROPBOX_Send)
+	r.GET(PATH_AUTH_OAUTH_DROPBOX_Recieve, AUTH_OAUTH_DROPBOX_Recieve)
+	r.GET(PATH_AUTH_OAUTH_GOOGLE_Recieve, AUTH_OAUTH_GOOGLE_Recieve)
+	r.GET(PATH_AUTH_OAUTH_GOOGLE_Send, AUTH_OAUTH_GOOGLE_Send)
+}
+
+const(
+
+	GITHUB_CLIENTID = "e0297346f88565c9f443"
+	GITHUB_SECRETID = "7dd96d4a262a004aeffefe4b0af1a38e03b38d14"
+
+	DROPBOX_Appkey    = "ddhu8e7nswl56yt"
+	DROPBOX_Appsecret = "387kru0n9nb0qkk"
+
+	GOOGLE_CLIENTID = "303980145350-1fne6cpqk2qohavu7n2497ck7qe2rm2c.apps.googleusercontent.com"
+	GOOGLE_SECRETID = "C8WMhmDSQ3EAZcURXkTtgGBc"
+
+)
+	
+func AUTH_OAUTH_GITHUB_Send(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	var model goauth.GitHubToken
+	goauth.Send(res,req,"http://localhost:8080/login/github/oauth/recieve",GITHUB_CLIENTID,&model)
+}
+
+func AUTH_OAUTH_GITHUB_Recieve(res http.ResponseWriter, req *http.Request, params httprouter.Params){		
+	var token goauth.GitHubToken
+	err := goauth.Recieve(res, req,"http://localhost:8080/login/github/oauth/recieve",GITHUB_CLIENTID,GITHUB_SECRETID,&token)
+	if err != nil { 
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time",http.StatusSeeOther)
+		return
+	}
+	email, err  := token.Email(req)
+	if err != nil { 
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time",http.StatusSeeOther)
+		return
+	}
+	info,  err 	:= token.AccountInfo(req)
+	if err != nil { 
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time",http.StatusSeeOther)
+		return
+	}
+	OAuthLogin(req,res,email.Email,info.Login,"",token.State)
+}
+
+func AUTH_OAUTH_DROPBOX_Send(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	var model goauth.DropboxToken
+	goauth.Send(res,req,"http://localhost:8080/login/dropbox/oauth/recieve",DROPBOX_Appkey, &model)
+}
+
+func AUTH_OAUTH_DROPBOX_Recieve(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	var token goauth.DropboxToken
+	err := goauth.Recieve(res, req, "http://localhost:8080/login/dropbox/oauth/recieve", DROPBOX_Appkey, DROPBOX_Appsecret,&token)
+	if err != nil {
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time (1)",http.StatusSeeOther)
+		return	
+	}
+	info,err := token.AccountInfo(req)
+	if err != nil {
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time (2)",http.StatusSeeOther)
+		return		
+	}
+	OAuthLogin(req,res,info.Email,info.NameDetails.GivenName,info.NameDetails.Surname,token.State)
+}
+	
+func AUTH_OAUTH_GOOGLE_Send(res http.ResponseWriter, req *http.Request, _ httprouter.Params){
+	var model goauth.GoogleToken
+	goauth.Send(res,req,"http://localhost:8080/login/google/oauth/recieve",GOOGLE_CLIENTID,&model)
+}
+
+func AUTH_OAUTH_GOOGLE_Recieve(res http.ResponseWriter, req *http.Request, _ httprouter.Params){
+	var token goauth.GoogleToken
+	err := goauth.Recieve(res, req,"http://localhost:8080/login/google/oauth/recieve",GOOGLE_CLIENTID, GOOGLE_SECRETID,&token)
+	if err != nil { 
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time",http.StatusSeeOther)
+		return	
+	}
+	info,err := token.AccountInfo(req)		
+	if err != nil {
+		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time (2)",http.StatusSeeOther)
+		return		
+	}
+	OAuthLogin(req,res,info.Email,info.FirstName,info.LastName,token.State)
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     display: flex;
     align-items: center;
@@ -32,3 +33,40 @@ label {
     fill: white;
     background-color: gray;
 }
+=======
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0px;
+    background: #2b2b2b;
+}
+
+
+
+label {
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 5rem;
+    padding: 1rem;
+    font-weight: bold;
+    color: white;
+    background: black;
+    text-transform: uppercase;
+}
+
+.user-avatar {
+    margin-left: 15px;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+}
+
+ svg.user-avatar {
+    fill: white;
+    background-color: gray;
+}
+>>>>>>> 7e8a3a2a357d2f832b66bf40d3654641ca493013

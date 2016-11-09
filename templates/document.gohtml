@@ -4,160 +4,35 @@
 <script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
 
 <!-- Theme included stylesheets -->
-<link href="/assets/css/quill.bubble.css" rel="stylesheet">
-<link href="/assets/css/quill.core.css" rel="stylesheet">
+
+<link href="/assets/css/documentviewcore.css" rel="stylesheet">
+<link href="/assets/css/documentviewsnow.css" rel="stylesheet">
+<link href="/assets/css/documentviewbubble.css" rel="stylesheet">
+
 <script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
-<link href="/assets/css/quill.snow.css" rel="stylesheet">
-
-
-<!-- CKEDITOR LIBRARY -->
-<!-- <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script> -->
-
-
-<!-- Core build with no theme, formatting, non-essential modules -->
-
-<!-- <script>
-// Initialize editor with custom theme and modules
-var fullEditor = new Quill('#quill-wrapper', {
-  modules: {
-    'authorship': { authorId: 'galadriel', enabled: true },
-    'multi-cursor': true,
-    'toolbar': { container: '#full-toolbar' },
-    'link-tooltip': true
-  },
-  theme: 'snow'
-});
-
-// Add basic editor's author
-var authorship = fullEditor.getModule('authorship');
-authorship.addAuthor('gandalf', 'rgba(255,153,51,0.4)');
-
-// Add a cursor to represent basic editor's cursor
-var cursorManager = fullEditor.getModule('multi-cursor');
-cursorManager.setCursor('gandalf', fullEditor.getLength()-1, 'Gandalf', 'rgba(255,153,51,0.9)');
-
-// Sync basic editor's cursor location
-basicEditor.on('selection-change', function(range) {
-  if (range) {
-    cursorManager.moveCursor('gandalf', range.end);
-  }
-});
-
-// Update basic editor's content with ours
-fullEditor.on('text-change', function(delta, source) {
-  if (source === 'user') {
-    basicEditor.updateContents(delta);
-  }
-});
-
-// basicEditor needs authorship module to accept changes from fullEditor's authorship module
-basicEditor.addModule('authorship', {
-  authorId: 'gandalf',
-  color: 'rgba(255,153,51,0.4)'
-});
-
-// Update our content with basic editor's
-basicEditor.on('text-change', function(delta, source) {
-  if (source === 'user') {
-    fullEditor.updateContents(delta);
-  }
-});
-</script> -->
-<style type = "text/css">
-
-body
-{
-	font-family: arial, helvetica, freesans, sans-serif;
-	font-size: 100%;
-	color: #333;
-	background-color: #ddd;
-}
-
-.box
-{
-	position: relative;
-	width: 45vw;
-	padding: 50px;
-	margin: 0 auto;
-	background-color: #fff;
-	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-}
-
-.box:before, .box:after
-{
-	position: absolute;
-	width: 40%;
-	height: 10px;
-	content: ' ';
-	left: 12px;
-	bottom: 12px;
-	background: transparent;
-	-webkit-transform: skew(-5deg) rotate(-5deg);
-	-moz-transform: skew(-5deg) rotate(-5deg);
-	-ms-transform: skew(-5deg) rotate(-5deg);
-	-o-transform: skew(-5deg) rotate(-5deg);
-	transform: skew(-5deg) rotate(-5deg);
-	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	z-index: -1;
-}
-
-.box:after
-{
-	left: auto;
-	right: 12px;
-	-webkit-transform: skew(5deg) rotate(5deg);
-	-moz-transform: skew(5deg) rotate(5deg);
-	-ms-transform: skew(5deg) rotate(5deg);
-	-o-transform: skew(5deg) rotate(5deg);
-	transform: skew(5deg) rotate(5deg);
-}
-
-h1, h2
-{
-	font-size: 1.6em;
-	font-weight: normal;
-	margin: 0;
-}
-
-h2
-{
-	font-size: 1.3em;
-	margin-top: 1.5em;
-}
-
-#textbox{
-  height: 50vh;
-  padding: 20px;
-  width: 55vw;
-  margin:auto;
-}
-
-
-
-</style>
-
 
 <div class="box">
-
+<div id="doctitle">
 {{.Title}}
+</div>
 
-<br>
-<br>
 
 {{.Content}}
 </div>
 
 <!-- Include Quill stylesheet -->
+
+<link href="/assets/css/quill.bubble.css" rel="stylesheet">
+<link href="/assets/css/quill.core.css" rel="stylesheet">
+<link href="/assets/css/quill.snow.css" rel="stylesheet">
+
+
 <form>
-<div id =textbox>
+<!-- <div id =textbox>
 
 <!-- Create the editor container -->
-<input name="writingtext" type="hidden">
+<!-- <input name="writingtext" type="hidden">
 <input type = "text" name="title" value="Title" id="title">
 
 <div id="editor">
@@ -169,9 +44,9 @@ h2
 
 <div class="row">
 	<input type="button" value = "YEEEEEAAAHHH" id = "clickMe">Save</input>
-</div>
+</div> -->
 
-</div>
+
 
 
 <!-- <form>

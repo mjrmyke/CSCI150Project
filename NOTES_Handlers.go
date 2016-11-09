@@ -11,7 +11,7 @@ import (
 const (
 	PATH_NOTES_document = "/document" //// TODO: remove prototype
 	PATH_NOTES_New      = "/new"
-	PATH_NOTES_View     = "/view/:ID/:TITLE"
+	PATH_NOTES_View     = "/view/:ID"
 	PATH_NOTES_Editor   = "/edit/:ID"
 	PATH_NOTES_EditRaw  = "/rawedit/:ID"
 )
@@ -29,21 +29,11 @@ func INIT_NOTES_HANDLERS(r *httprouter.Router) {
 
 /// TODO: implement
 func NOTES_GET_New(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	_, err := GetUserFromSession(req) // Check if a user is already logged in.
-	if err != nil {
-		http.Redirect(res, req, "/"+req.FormValue("redirect"), http.StatusSeeOther)
+	if MustLogin(res, req) {
 		return
 	}
-	ctx := appengine.NewContext(req)
 
-	id := params.ByName("ID")
-
-	title := params.ByName("TITLE")
-
-	key := id + "|" + title
-
-	log.Infof(ctx, "im just here so i allow you to compile", key)
-	ServeTemplateWithParams(res, "document.gohtml", struct {
+	ServeTemplateWithParams(res, "newnote", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{

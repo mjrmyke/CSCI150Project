@@ -1,3 +1,4 @@
+<!doctype html>
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.1.5/quill.js"></script>
 <script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
@@ -5,6 +6,11 @@
 <!-- Theme included stylesheets -->
 <link href="//cdn.quilljs.com/1.1.5/quill.snow.css" rel="stylesheet">
 <link href="//cdn.quilljs.com/1.1.5/quill.bubble.css" rel="stylesheet">
+
+
+<!-- CKEDITOR LIBRARY -->
+<!-- <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script> -->
+
 
 <!-- Core build with no theme, formatting, non-essential modules -->
 <link href="//cdn.quilljs.com/1.1.5/quill.core.css" rel="stylesheet">
@@ -162,17 +168,37 @@ h2
 
 </div>
 
-
 <!-- Include Quill stylesheet -->
 <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+<form>
 <div id =textbox>
-<!-- Create the toolbar container -->
 
 <!-- Create the editor container -->
+<input name="writingtext" type="hidden">
 <div id="editor">
   <p>Hello World!</p>
 </div>
+
+<div class="row">
+	<button class="btn btn-primary" type="submit">Save</button>
 </div>
+
+</div>
+</form>
+
+
+<!-- <form>
+		<textarea name="editor1" id="editor1" rows="10" cols="80">
+				This is my textarea to be replaced with CKEditor.
+		</textarea>
+		<script>
+				// Replace the <textarea id="editor1"> with a CKEditor
+				// instance, using default configuration.
+				CKEDITOR.replace( 'editor1' );
+		</script>
+</form> -->
+
+
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 
@@ -205,6 +231,19 @@ var toolbarOptions = [
     theme: 'snow'
   });
 
+//submission form
+	var form = document.querySelector('form');
+	form.onsubmit = function() {
+	  // Populate hidden form on submit
+	  var about = document.querySelector('input[name=writingtext]');
+	  about.value = JSON.stringify(quill.getContents());
+
+	  console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+
+	  // No back end to actually submit to!
+	  alert('Open the console to see the submit data!')
+	  return false;
+	};
 
 
 // 	// Store accumulated changes

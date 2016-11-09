@@ -39,7 +39,7 @@ func init() {
 		"parse": parse,
 	} // Load up all templates.
 	tpl = template.New("").Funcs(funcMap)
-	tpl = template.Must(tpl.ParseGlob("public/templates/*.gohtml"))
+	tpl = template.Must(tpl.ParseGlob("templates/*.gohtml"))
 
 }
 

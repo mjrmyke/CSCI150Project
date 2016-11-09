@@ -183,7 +183,6 @@ func AUTH_POST_Register(res http.ResponseWriter, req *http.Request, params httpr
 		Email:    strings.ToLower(req.FormValue("email")),
 		First:    req.FormValue("first"),
 		Last:     req.FormValue("last"),
-		Customer: "",
 	}
 
 	password := req.FormValue("password")

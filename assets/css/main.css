@@ -13,6 +13,21 @@
     padding-right: 1rem;
 }
 
+#frontpagecreate{
+  color: #efa8b0;
+  font-weight: bold;
+}
+#frontpageshare{
+  color: #a89cc8;
+  font-weight: bold;
+}
+
+#frontpageedit{
+  color: #8cc9f0;
+  font-weight: bold;
+}
+
+
 i#profile-picture {
     padding: 0 1px 0 0;
     background-color: #adadad;

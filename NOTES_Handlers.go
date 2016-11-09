@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
 	"strconv"
 
@@ -81,7 +82,7 @@ func NOTES_POST_New(res http.ResponseWriter, req *http.Request, params httproute
 	if ErrorPage(ctx, res, nil, "Internal Server Error (2)", err, http.StatusSeeOther) {
 		return
 	}
-
+	log.Infof(ctx, "Information being submitted: ", NewNote, NewContent)
 	http.Redirect(res, req, "/view/"+strconv.FormatInt(newkey.IntID(), 10), http.StatusSeeOther)
 }
 
@@ -109,15 +110,18 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 		return
 	}
 
+	Body := template.HTML(ViewContent.Content)
+
 	ServeTemplateWithParams(res, "document", struct {
 		HeaderData
-		ErrorResponse, RedirectURL, Title, Content string
+		ErrorResponse, RedirectURL, Title string
+		Content                           template.HTML
 	}{
 		HeaderData:    *MakeHeader(res, req, false, true),
 		RedirectURL:   req.FormValue("redirect"),
 		ErrorResponse: req.FormValue("ErrorResponse"),
 		Title:         ViewContent.Title,
-		Content:       ViewContent.Content,
+		Content:       Body,
 	})
 
 }

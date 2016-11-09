@@ -1,12 +1,14 @@
 <!doctype html>
 {{define "document"}}
 <!-- Main Quill library -->
-<script src="//cdn.quilljs.com/1.1.5/quill.js"></script>
 <script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
 
 <!-- Theme included stylesheets -->
-<link href="//cdn.quilljs.com/1.1.5/quill.snow.css" rel="stylesheet">
-<link href="//cdn.quilljs.com/1.1.5/quill.bubble.css" rel="stylesheet">
+<link href="/assets/css/quill.bubble.css" rel="stylesheet">
+<link href="/assets/css/quill.core.css" rel="stylesheet">
+<script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<link href="/assets/css/quill.snow.css" rel="stylesheet">
 
 
 <!-- CKEDITOR LIBRARY -->
@@ -14,8 +16,6 @@
 
 
 <!-- Core build with no theme, formatting, non-essential modules -->
-<link href="//cdn.quilljs.com/1.1.5/quill.core.css" rel="stylesheet">
-<script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
 
 <!-- <script>
 // Initialize editor with custom theme and modules
@@ -153,7 +153,6 @@ h2
 </div>
 
 <!-- Include Quill stylesheet -->
-<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
 <form>
 <div id =textbox>
 

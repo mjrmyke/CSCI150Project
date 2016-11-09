@@ -176,16 +176,20 @@ h2
 
 <!-- Create the editor container -->
 <input name="writingtext" type="hidden">
+<input type = "text" name="title" value="Title" id="title">
+
 <div id="editor">
   <p>Hello World!</p>
 </div>
 
+</form>
+
+
 <div class="row">
-	<button class="btn btn-primary" type="submit">Save</button>
+	<input type="button" value = "YEEEEEAAAHHH" id = "clickMe">Save</input>
 </div>
 
 </div>
-</form>
 
 
 <!-- <form>
@@ -205,6 +209,10 @@ h2
 
 <!-- Initialize Quill editor -->
 <script>
+
+document.getElementById("clickMe").onclick = function () { post('/document',{title: document.getElementById("title").value ,note: editor.container.firstChild.innerHTML}); };
+
+
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -233,18 +241,14 @@ var toolbarOptions = [
   });
 
 //submission form
-	var form = document.querySelector('form');
-	form.onsubmit = function() {
-	  // Populate hidden form on submit
-	  var about = document.querySelector('input[name=writingtext]');
-	  about.value = JSON.stringify(quill.getContents());
-
-	  console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-
-	  // No back end to actually submit to!
-	  alert('Open the console to see the submit data!')
-	  return false;
-	};
+// alert("test")
+// document.getElementById("submit").onclick = post('/document',{note: editor.container.firstChild.innerHTML});
+//
+// var el = document.getElementById("submit");
+// if (el.addEventListener)
+//     el.addEventListener("click", post('/document',{note: editor.container.firstChild.innerHTML}), false);
+// else if (el.attachEvent)
+//     el.attachEvent('onclick', post('/document',{note: editor.container.firstChild.innerHTML}));
 
 
 // 	// Store accumulated changes
@@ -277,5 +281,30 @@ var toolbarOptions = [
 //   if (change.length() > 0) {
 //     return 'There are unsaved changes. Are you sure you want to leave?';
 //   }
+
+function post(path, params, method) {
+    method = "post";
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
 </script>
+
 {{end}}

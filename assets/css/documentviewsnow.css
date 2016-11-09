@@ -24,6 +24,7 @@
   padding: 0;
 }
 .box {
+  margin-top: 5vh;
   box-sizing: border-box;
   cursor: text;
   line-height: 1.42;

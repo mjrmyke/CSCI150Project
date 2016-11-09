@@ -1,17 +1,21 @@
 <!doctype html>
-{{define "document"}}
+{{define "viewNote"}}
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
+<link rel="stylesheet" href="/assets/css/main.css"/>
 
 <!-- Theme included stylesheets -->
 
+<head>
 <link href="/assets/css/documentviewcore.css" rel="stylesheet">
 <link href="/assets/css/documentviewsnow.css" rel="stylesheet">
 <link href="/assets/css/documentviewbubble.css" rel="stylesheet">
 
 <script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
-
+</head>
+{{ template "header" .}}
+<body>
 <div class="box">
 <div id="doctitle">
 {{.Title}}
@@ -29,6 +33,7 @@
 
 
 <form>
+</body>
 <!-- <div id =textbox>
 
 <!-- Create the editor container -->

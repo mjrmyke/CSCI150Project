@@ -112,7 +112,7 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 
 	Body := template.HTML(ViewContent.Content)
 
-	ServeTemplateWithParams(res, "document", struct {
+	ServeTemplateWithParams(res, "viewNote", struct {
 		HeaderData
 		ErrorResponse, RedirectURL, Title string
 		Content                           template.HTML

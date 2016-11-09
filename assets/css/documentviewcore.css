@@ -17,6 +17,9 @@
  	background-color: #ddd;
  }
 
+#nav{
+  position:relative !important;
+}
  .box
  {
  	position: relative;

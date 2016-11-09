@@ -21,7 +21,7 @@ func NOTES_GET_DOCUMENT(res http.ResponseWriter, req *http.Request, params httpr
 		return
 	}
 
-	ServeTemplateWithParams(res, "document.gohtml", struct {
+	ServeTemplateWithParams(res, "document", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{

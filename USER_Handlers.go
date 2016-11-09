@@ -46,7 +46,7 @@ const (
 // Get Terms
 //===========================================================================
 func USERS_GET_Terms(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	ServeTemplateWithParams(res, "user-legal-terms.gohtml", struct {
+	ServeTemplateWithParams(res, "user-legal-terms", struct {
 		HeaderData
 	}{
 		HeaderData: *MakeHeader(res, req, true, true),
@@ -131,7 +131,7 @@ func USERS_GET_Sessions(res http.ResponseWriter, req *http.Request, params httpr
 		}
 	}
 
-	ServeTemplateWithParams(res, "user-sessions.gohtml", struct {
+	ServeTemplateWithParams(res, "user-sessions", struct {
 		HeaderData
 		CurrentSession Session
 		OtherSessions  []Session
@@ -151,7 +151,7 @@ func USERS_GET_Profile(res http.ResponseWriter, req *http.Request, params httpro
 	}
 	ctx := appengine.NewContext(req)
 	log.Infof(ctx, "Request query string is: %s", req.URL.Query())
-	ServeTemplateWithParams(res, "profile.gohtml", struct {
+	ServeTemplateWithParams(res, "profile", struct {
 		HeaderData
 		ErrorResponseProfile string
 	}{
@@ -181,7 +181,7 @@ func USERS_GET_ProfileView(res http.ResponseWriter, req *http.Request, params ht
 		*MakeHeader(res, req, true, true),
 		ci,
 	}
-	ServeTemplateWithParams(res, "user-profile.gohtml", screen)
+	ServeTemplateWithParams(res, "user-profile", screen)
 }
 
 //===========================================================================

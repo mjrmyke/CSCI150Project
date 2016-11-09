@@ -4,6 +4,13 @@
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
  */
+
+#edit{
+  text-align: center;
+  margin: 10px;
+  color: white;
+}
+
 .ql-container {
   box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;

@@ -1,0 +1,133 @@
+<!doctype html>
+{{define "editnote"}}
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.1.5/quill.js"></script>
+<script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
+
+<!-- Theme included stylesheets -->
+<link href="/assets/css/quill.bubble.css" rel="stylesheet">
+<link href="/assets/css/quill.core.css" rel="stylesheet">
+<script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<link href="/assets/css/quill.snow.css" rel="stylesheet">
+
+<!-- Include the Quill library -->
+<!-- <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script> -->
+
+
+
+<!-- Core build with no theme, formatting, non-essential modules -->
+<link href="//cdn.quilljs.com/1.1.5/quill.core.css" rel="stylesheet">
+<head>
+
+	<title>Project NoteOrious - New Note</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="/assets/css/main.css"/>
+	<link href="/assets/css/newnote.css" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/viewnote.css" />
+
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+</head>
+
+
+
+<html>
+<body>
+	{{ template "header" .}}
+
+<!-- Include Quill stylesheet -->
+<form>
+	<br>
+	<br>
+	<br>
+<div id =textbox>
+
+<!-- Create the editor container -->
+<input name="writingtext" type="hidden">
+<input type = "text" name="title" value="{{.Title}}" id="title">
+<br>
+
+<div id="editor">
+{{.Content}}
+</div>
+
+</form>
+
+
+<div class="row">
+	<input type="button" value = "Save Note" id = "clickMe"></input>
+<p><br><input type="checkbox" id="publiclyeditable" /><label for="publiclyeditable"><span class="ui"></span>publicly editable</label></p>
+</div>
+
+</div>
+
+</html>
+</body>
+
+
+<!-- Initialize Quill editor -->
+<script>
+
+var checkedValue = document.getElementById('publiclyeditable').checked;
+var strchecked = checkedValue.toString();
+
+document.getElementById("clickMe").onclick = function () { post('/edit/',{title: document.getElementById("title").value ,note: editor.container.firstChild.innerHTML, protection: strchecked, notekey: {{.Notekey}}}) };
+
+
+
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block', 'video'],
+
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+
+
+  var editor = new Quill('#editor', {
+    modules: { toolbar: toolbarOptions },
+    theme: 'snow'
+  });
+
+
+function post(path, params, method) {
+    method = "post";
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
+</script>
+
+{{end}}

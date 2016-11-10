@@ -13,7 +13,7 @@ func Handle_CORE(r *httprouter.Router) {
 
 // Serves the index page.
 func index(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	ServeTemplateWithParams(res, "index.gohtml", struct {
+	ServeTemplateWithParams(res, "index", struct {
 		HeaderData
 	}{
 		*MakeHeader(res, req, true, true),

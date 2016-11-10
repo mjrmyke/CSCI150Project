@@ -4,7 +4,9 @@ runtime: go
 api_version: go1
 
 handlers:
-- url: /public/*
+- url: /public
   static_dir: public
+- url: /assets
+  static_dir: assets
 - url: /.*
   script: _go_app

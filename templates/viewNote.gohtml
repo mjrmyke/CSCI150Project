@@ -1,0 +1,175 @@
+<!doctype html>
+{{define "viewNote"}}
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.1.5/quill.min.js"></script>
+<link rel="stylesheet" href="/assets/css/main.css"/>
+
+<!-- Theme included stylesheets -->
+
+<head>
+<link href="/assets/css/documentviewcore.css" rel="stylesheet">
+<link href="/assets/css/documentviewsnow.css" rel="stylesheet">
+<link href="/assets/css/documentviewbubble.css" rel="stylesheet">
+
+<script src="//cdn.quilljs.com/1.1.5/quill.core.js"></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+</head>
+{{ template "header" .}}
+<body>
+<div id="edit"> <a href="/edit/{{.Notekey}}">Edit</a><br>
+Note Owned by: {{.User.First}} {{.User.Last}}
+ </div>
+<div class="box">
+<div id="doctitle">
+{{.Title}}
+</div>
+
+
+{{.Content}}
+</div>
+
+<!-- Include Quill stylesheet -->
+
+<link href="/assets/css/quill.bubble.css" rel="stylesheet">
+<link href="/assets/css/quill.core.css" rel="stylesheet">
+<link href="/assets/css/quill.snow.css" rel="stylesheet">
+
+
+<form>
+</body>
+<!-- <div id =textbox>
+
+<!-- Create the editor container -->
+<!-- <input name="writingtext" type="hidden">
+<input type = "text" name="title" value="Title" id="title">
+
+<div id="editor">
+  <p>Hello World!</p>
+</div>
+
+</form>
+
+
+<div class="row">
+	<input type="button" value = "YEEEEEAAAHHH" id = "clickMe">Save</input>
+</div> -->
+
+
+
+
+<!-- <form>
+		<textarea name="editor1" id="editor1" rows="10" cols="80">
+				This is my textarea to be replaced with CKEditor.
+		</textarea>
+		<script>
+				// Replace the <textarea id="editor1"> with a CKEditor
+				// instance, using default configuration.
+				CKEDITOR.replace( 'editor1' );
+		</script>
+</form> -->
+
+
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+
+<!-- Initialize Quill editor -->
+<script>
+
+document.getElementById("clickMe").onclick = function () { post('/document',{title: document.getElementById("title").value ,note: editor.container.firstChild.innerHTML}); };
+
+
+
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block', 'video', 'image'],
+
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+
+
+  var editor = new Quill('#editor', {
+    modules: { toolbar: toolbarOptions },
+    theme: 'snow'
+  });
+
+//submission form
+// alert("test")
+// document.getElementById("submit").onclick = post('/document',{note: editor.container.firstChild.innerHTML});
+//
+// var el = document.getElementById("submit");
+// if (el.addEventListener)
+//     el.addEventListener("click", post('/document',{note: editor.container.firstChild.innerHTML}), false);
+// else if (el.attachEvent)
+//     el.attachEvent('onclick', post('/document',{note: editor.container.firstChild.innerHTML}));
+
+
+// 	// Store accumulated changes
+// var change = new Delta();
+// quill.on('text-change', function(delta) {
+//   change = change.compose(delta);
+// });
+//
+// // Save periodically
+// setInterval(function() {
+//   if (change.length() > 0) {
+//     console.log('Saving changes', change);
+//     /*
+//     Send partial changes
+//     $.post('/your-endpoint', {
+//       partial: JSON.stringify(change)
+//     });
+//
+//     Send entire document
+//     $.post('/your-endpoint', {
+//       doc: JSON.stringify(quill.getContents())
+//     });
+//     */
+//     change = new Delta();
+//   }
+// }, 5*1000);
+//
+// // Check for unsaved data
+// window.onbeforeunload = function() {
+//   if (change.length() > 0) {
+//     return 'There are unsaved changes. Are you sure you want to leave?';
+//   }
+
+function post(path, params, method) {
+    method = "post";
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
+</script>
+
+{{end}}

@@ -2,7 +2,13 @@
 <nav id="nav">
   <ul>
     <li id="first">
-      <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a></li>
+      <a href="#"><span class="icon fa-copy"></span><span class="desktop">Create Notes</span></a>
+    </li>
+    {{if ne .CurrentPath ""}}
+    <li id="home-link">
+      <a href="/">{{ template "menu-logo" .}}</a>
+    </li>
+    {{end}}
       {{if .User.Email}}
       <li id="second">
         <dropdown>

@@ -17,6 +17,10 @@ li#first {
     width: 250px;
 }
 
+li#second {
+    justify-content: flex-end;
+}
+
 #home-link {
     position: relative;
     justify-content: center;
@@ -3399,17 +3403,18 @@ $colors: #E74C3C, #0072B5, #2C3E50;
     list-style: none;
 		}
 
-			#nav ul li {
-				-moz-transition: margin 0.2s ease;
-				-webkit-transition: margin 0.2s ease;
-				-ms-transition: margin 0.2s ease;
-				transition: margin 0.2s ease;
-        display: flex;
-        align-items: center;
-				margin: 0 0.35em;
-				padding: 0;
-				vertical-align: middle;
-			}
+    #nav ul li {
+      -moz-transition: margin 0.2s ease;
+      -webkit-transition: margin 0.2s ease;
+      -ms-transition: margin 0.2s ease;
+      transition: margin 0.2s ease;
+      display: flex;
+      align-items: center;
+      margin: 0 0.35em;
+      padding: 0;
+      width: 250px;
+      vertical-align: middle;
+    }
 
 			#nav ul li a {
 				-moz-transition: background-color 0.5s ease;

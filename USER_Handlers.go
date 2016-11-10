@@ -14,20 +14,6 @@ import (
 	"google.golang.org/appengine/datastore"
 )
 
-func INIT_USERS_HANDLERS(r *httprouter.Router) {
-	r.POST(PATH_USERS_ChangeInfo, USERS_POST_ChangeInfo)
-	r.POST(PATH_USERS_DeleteAccount, USERS_POST_DeleteAccount)
-	r.GET(PATH_USERS_GET_Profile, USERS_GET_Profile)         // PATH_USERS_GET_Profile 	  = "/profile"
-	r.GET(PATH_USERS_GET_ProfileView, USERS_GET_ProfileView) // PATH_USERS_GET_ProfileView 	  = "/profile/:ID"
-	r.GET(PATH_USERS_Sessions, USERS_GET_Sessions)
-	r.GET(PATH_USERS_DeleteSession, USERS_GET_DeleteSession)
-	r.GET(PATH_USERS_DeleteAllSessions, USERS_GET_DeleteAllSessions)
-	r.GET(PATH_USERS_Terms, USERS_GET_Terms)
-	r.POST(PATH_USERS_Changepassword, USERS_POST_Changepassword)
-	r.POST(PATH_USERS_Changeavatar, USERS_POST_Changeavatar)
-	r.POST(PATH_USERS_Changeemail, USERS_POST_Changeemail)
-}
-
 const (
 	PATH_USERS_GET_Profile       = "/profile"
 	PATH_USERS_GET_ProfileView   = "/profile/:ID"
@@ -41,6 +27,20 @@ const (
 	PATH_USERS_Changeavatar      = "/api/profile/changeavatar"
 	PATH_USERS_Changeemail       = "/api/profile/changeemail"
 )
+
+func INIT_USERS_HANDLERS(r *httprouter.Router) {
+	r.POST(PATH_USERS_ChangeInfo, USERS_POST_ChangeInfo)
+	r.POST(PATH_USERS_DeleteAccount, USERS_POST_DeleteAccount)
+	r.GET(PATH_USERS_GET_Profile, USERS_GET_Profile)         // PATH_USERS_GET_Profile 	  = "/profile"
+	r.GET(PATH_USERS_GET_ProfileView, USERS_GET_ProfileView) // PATH_USERS_GET_ProfileView 	  = "/profile/:ID"
+	r.GET(PATH_USERS_Sessions, USERS_GET_Sessions)
+	r.GET(PATH_USERS_DeleteSession, USERS_GET_DeleteSession)
+	r.GET(PATH_USERS_DeleteAllSessions, USERS_GET_DeleteAllSessions)
+	r.GET(PATH_USERS_Terms, USERS_GET_Terms)
+	r.POST(PATH_USERS_Changepassword, USERS_POST_Changepassword)
+	r.POST(PATH_USERS_Changeavatar, USERS_POST_Changeavatar)
+	r.POST(PATH_USERS_Changeemail, USERS_POST_Changeemail)
+}
 
 //===========================================================================
 // Get Terms
@@ -175,10 +175,10 @@ func USERS_GET_ProfileView(res http.ResponseWriter, req *http.Request, params ht
 		return
 	}
 	screen := struct {
-		HeaderData
+		*HeaderData
 		Data *User
 	}{
-		*MakeHeader(res, req, true, true),
+		MakeHeader(res, req, true, true),
 		ci,
 	}
 	ServeTemplateWithParams(res, "user-profile.gohtml", screen)

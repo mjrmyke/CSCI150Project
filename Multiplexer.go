@@ -13,6 +13,7 @@ func MultiPlexer(r *httprouter.Router) {
 	INIT_AUTH_HANDLERS(r)
 	INIT_OAUTH_Handlers(r)
 	INIT_USERS_HANDLERS(r)
+	INIT_NOTES_HANDLERS(r)
 }
 
 // Init do not touch.

@@ -8,11 +8,9 @@ import (
 	"time"
 
 	"regexp"
-	"strings"
 
 	"github.com/Esseh/retrievable"
-	humanize "github.com/dustin/go-humanize"
-	"github.com/russross/blackfriday" // russross markdown parser
+	humanize "github.com/dustin/go-humanize" // russross markdown parser
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
 )
@@ -77,14 +75,14 @@ func MakeHeader(res http.ResponseWriter, req *http.Request, login, register bool
 
 /// Parses markdown to produce HTML.
 func parse(inp string) string {
-	inp = strings.Replace(inp, `- [ ]`, `- <input type="checkbox">`, -1)         // Set Unchecked Checkbox
-	inp = strings.Replace(inp, `- [x]`, `- <input type="checkbox" checked>`, -1) // Set Checked Checkbox
-	data := []byte(inp)                                                          // Convert to Byte
-	regex, _ := regexp.Compile("[sS][cC][rR][iI][pP][tT]")                       // Escape Script Tag
+	// inp = strings.Replace(inp, `- [ ]`, `- <input type="checkbox">`, -1)         // Set Unchecked Checkbox
+	// inp = strings.Replace(inp, `- [x]`, `- <input type="checkbox" checked>`, -1) // Set Checked Checkbox
+	data := []byte(inp)                                    // Convert to Byte
+	regex, _ := regexp.Compile("[sS][cC][rR][iI][pP][tT]") // Escape Script Tag
 	data = regex.ReplaceAll(data, []byte("&#115;&#99;&#114;&#105;&#112;&#116;"))
 	regex2, _ := regexp.Compile("[iI][fF][rR][aA][mM][eE]") // Escape Iframe Tag
 	data = regex2.ReplaceAll(data, []byte("&#105;&#102;&#114;&#97;&#109;&#101;"))
-	data = blackfriday.MarkdownCommon(data) // Get Common Markdown from russross's parser
+	// data = blackfriday.MarkdownCommon(data) // Get Common Markdown from russross's parser
 	return string(data)
 }
 

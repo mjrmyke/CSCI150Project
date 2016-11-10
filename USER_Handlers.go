@@ -12,14 +12,14 @@ import (
 )
 
 func INIT_USERS_HANDLERS(r *httprouter.Router) {
-	r.GET(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit) 
-	r.POST(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit) 
-	r.GET(PATH_USERS_ProfileView, USERS_GET_ProfileView) 
+	r.GET(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
+	r.POST(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
+	r.GET(PATH_USERS_ProfileView, USERS_GET_ProfileView)
 }
 
 const (
-	PATH_USERS_ProfileEdit   = "/editprofile"
-	PATH_USERS_ProfileView   = "/profile/:ID"
+	PATH_USERS_ProfileEdit = "/editprofile"
+	PATH_USERS_ProfileView = "/profile/:ID"
 )
 
 //===========================================================================
@@ -39,6 +39,7 @@ func USERS_GET_ProfileEdit(res http.ResponseWriter, req *http.Request, params ht
 		req.FormValue("ErrorResponseProfile"),
 	})
 }
+
 // TODO: Implement
 func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {}
 

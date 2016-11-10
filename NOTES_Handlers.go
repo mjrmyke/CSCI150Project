@@ -89,7 +89,7 @@ func NOTES_POST_New(res http.ResponseWriter, req *http.Request, params httproute
 
 /// TODO: implement
 func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	_, err := GetUserFromSession(req) // Check if a user is already logged in.
+	u, err := GetUserFromSession(req) // Check if a user is already logged in.
 	ctx := appengine.NewContext(req)
 
 	NoteKeyStr := params.ByName("ID")
@@ -117,6 +117,7 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 		HeaderData
 		ErrorResponse, RedirectURL, Title, Notekey string
 		Content                                    template.HTML
+		User                                       *User
 	}{
 		HeaderData:    *MakeHeader(res, req, false, true),
 		RedirectURL:   req.FormValue("redirect"),
@@ -124,6 +125,7 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 		Title:         ViewContent.Title,
 		Notekey:       NoteKeyStr,
 		Content:       Body,
+		User:          u,
 	})
 
 }

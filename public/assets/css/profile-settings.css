@@ -1,0 +1,43 @@
+body{
+    background-color:transparent;
+    display: block;
+   
+}
+
+
+.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+.page-header{
+background: pink;
+    text-align: center;
+    display: block;
+    margin-left: center;
+    margin-right: center;
+    font-size: 50px;
+}
+h6{
+    text-align: center;
+}
+
+h3{
+    text-align: center;
+}
+.form-group{
+    text-align: center;
+}
+.forfun{
+    text-align: center;
+    
+}
+.for1{
+    text-align: center;
+    
+    
+}
+.container{
+    background: lightwhite;
+   
+}

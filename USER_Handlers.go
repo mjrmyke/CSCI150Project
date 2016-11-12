@@ -58,21 +58,7 @@ func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params h
 	if ErrorPage(ctx, res, nil, "server error placing key", err, http.StatusBadRequest) {
 		return
 	}
-	rdr, hdr, err3 := req.FormFile("avatar")
-	defer rdr.Close()
-	var err2 error
-	if err3 != nil {
-		err2 = UploadAvatar(ctx, int64(u.IntID), hdr, rdr)
-		u.Avatar = true
-		log.Infof(ctx, "error: ", err2)
-	}
-	if err2 != nil {
-		fmt.Fprint(res, err2)
-	}
-	_, err = retrievable.PlaceEntity(ctx, u.IntID, u)
-	if ErrorPage(ctx, res, nil, "server error placing key", err, http.StatusBadRequest) {
-		return
-	}
+
 	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID), 10), http.StatusSeeOther)
 }
 

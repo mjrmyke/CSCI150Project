@@ -1,10 +1,5 @@
-
-body
-{
-	font-family: arial, helvetica, freesans, sans-serif;
-	font-size: 100%;
-	color: #333;
-	background-color: #ddd;
+body{
+	color:black;
 }
 
 
@@ -98,14 +93,14 @@ input{
 	min-width: 0px;
 
 }
-.ql-editor{
-	position: relative;
-	padding: 50px;
-	margin: 0 auto;
-	background-color: #c47089;
-	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+.ql-editor {
+    position: relative;
+    padding: 50px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
 }
 #clickMe{
 	margin-top: 5vh;
@@ -169,12 +164,18 @@ h2
 
 h1, h2, h3, h4, h5, h6
 {
-	color: black; 
+	color: black;
 }
 
-#textbox{
-  height: 65vh;
-  padding: 20px;
-  width: 60vw;
-  margin:auto;
+#textbox {
+    height: 100vh;
+    padding: 20px;
+    width: 60vw;
+    margin: auto;
+}
+
+input#title {
+    background-color: white;
+    border: none;
+    margin-top: 2rem;
 }

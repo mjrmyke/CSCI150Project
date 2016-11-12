@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Esseh/retrievable"
 	"github.com/julienschmidt/httprouter"
 	"google.golang.org/appengine"
 )
@@ -25,6 +26,9 @@ const (
 // Profile
 //===========================================================================
 func USERS_GET_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res,req) {
+		return
+	}
 	u, _ := GetUserFromSession(req)
 	err := ServeTemplateWithParams(res, "profile-settings", struct {
 		HeaderData
@@ -41,7 +45,23 @@ func USERS_GET_ProfileEdit(res http.ResponseWriter, req *http.Request, params ht
 }
 
 // TODO: Implement
-func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {}
+func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	u, _ := GetUserFromSession(req)
+	u.First = req.FormValue("first")
+	u.Last  = req.FormValue("last")
+	u.Bio   = req.FormValue("bio")
+	ctx := appengine.NewContext(req)
+	retrievable.PlaceEntity(ctx,u.IntID,u)
+	/*rdr, hdr, err := req.FormFile("avatar")
+	var err2 error
+	if err != nil {
+		err2 = UploadAvatar(ctx, int64(u.IntID), hdr, rdr)
+	}	
+	if err2 != nil {
+		fmt.Fprint(res,err2)
+	}*/
+	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID),10), http.StatusSeeOther)
+}
 
 //===========================================================================
 // Profile View

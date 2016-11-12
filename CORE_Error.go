@@ -57,7 +57,7 @@ func ErrorPage(ctx context.Context, res http.ResponseWriter, u *User, ErrorTitle
 			HeaderData{true, true, ctx, u, ""}, ErrorTitle, e, errCode,
 		}
 		res.WriteHeader(errCode)
-		ServeTemplateWithParams(res, "site-error.gohtml", args) // Execute the error page with the anonymous struct.
+		ServeTemplateWithParams(res, "site-error", args) // Execute the error page with the anonymous struct.
 		return true
 	}
 	return false

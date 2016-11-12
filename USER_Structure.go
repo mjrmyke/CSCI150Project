@@ -3,7 +3,6 @@ package main
 
 import (
 	"encoding/json"
-	"time"
 
 	"github.com/Esseh/retrievable"
 	"golang.org/x/net/context"
@@ -21,10 +20,6 @@ type (
 		Email             string
 		Avatar            bool `datastore:",noindex"`
 		Bio               string
-		DOB               time.Time
-		Customer          string `datastore:",noindex"`
-		Notified          int64
-		Questions         int64
 		retrievable.IntID `datastore:"-" json:"-"`
 	}
 	// RecentlyViewed struct{ CID []int64 } // Holds recently viewed course information.
@@ -33,10 +28,6 @@ type (
 		Email       string
 		Avatar      bool `datastore:",noindex"`
 		Bio         string
-		DOB         time.Time
-		Customer    string `datastore:",noindex"`
-		Notified    int64
-		Questions   int64
 	}
 )
 
@@ -58,10 +49,6 @@ func (u *User) toEncrypt() (*EncryptedUser, error) {
 		Last:      u.Last,
 		Avatar:    u.Avatar,
 		Bio:       u.Bio,
-		DOB:       u.DOB,
-		Customer:  u.Customer,
-		Notified:  u.Notified,
-		Questions: u.Questions,
 	}
 	email, err := Encrypt([]byte(u.Email), encryptKey)
 	if err != nil {
@@ -81,10 +68,6 @@ func (u *User) fromEncrypt(e *EncryptedUser) error {
 	u.Email = string(email)
 	u.Avatar = e.Avatar
 	u.Bio = e.Bio
-	u.DOB = e.DOB
-	u.Customer = e.Customer
-	u.Notified = e.Notified
-	u.Questions = e.Questions
 	return nil
 }
 

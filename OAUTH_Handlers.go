@@ -11,8 +11,6 @@ func init(){
 }
 
 const(
-	PATH_AUTH_OAUTH_GOOGLE_Recieve  = "/login/google/oauth/recieve"
-	PATH_AUTH_OAUTH_GOOGLE_Send     = "/login/google/oauth/send"
 	PATH_AUTH_OAUTH_GITHUB_Recieve  = "/login/github/oauth/recieve"
 	PATH_AUTH_OAUTH_GITHUB_Send     = "/login/github/oauth/send"
 	PATH_AUTH_OAUTH_DROPBOX_Send    = "/login/dropbox/oauth/send"
@@ -24,8 +22,6 @@ func INIT_OAUTH_Handlers(r *httprouter.Router){
 	r.GET(PATH_AUTH_OAUTH_GITHUB_Recieve, AUTH_OAUTH_GITHUB_Recieve)
 	r.GET(PATH_AUTH_OAUTH_DROPBOX_Send, AUTH_OAUTH_DROPBOX_Send)
 	r.GET(PATH_AUTH_OAUTH_DROPBOX_Recieve, AUTH_OAUTH_DROPBOX_Recieve)
-	r.GET(PATH_AUTH_OAUTH_GOOGLE_Recieve, AUTH_OAUTH_GOOGLE_Recieve)
-	r.GET(PATH_AUTH_OAUTH_GOOGLE_Send, AUTH_OAUTH_GOOGLE_Send)
 }
 
 const(
@@ -35,9 +31,6 @@ const(
 
 	DROPBOX_Appkey    = "ddhu8e7nswl56yt"
 	DROPBOX_Appsecret = "387kru0n9nb0qkk"
-
-	GOOGLE_CLIENTID = "303980145350-1fne6cpqk2qohavu7n2497ck7qe2rm2c.apps.googleusercontent.com"
-	GOOGLE_SECRETID = "C8WMhmDSQ3EAZcURXkTtgGBc"
 
 )
 	
@@ -84,24 +77,4 @@ func AUTH_OAUTH_DROPBOX_Recieve(res http.ResponseWriter, req *http.Request, _ ht
 		return		
 	}
 	OAuthLogin(req,res,info.Email,info.NameDetails.GivenName,info.NameDetails.Surname,token.State)
-}
-	
-func AUTH_OAUTH_GOOGLE_Send(res http.ResponseWriter, req *http.Request, _ httprouter.Params){
-	var model goauth.GoogleToken
-	goauth.Send(res,req,"http://localhost:8080/login/google/oauth/recieve",GOOGLE_CLIENTID,&model)
-}
-
-func AUTH_OAUTH_GOOGLE_Recieve(res http.ResponseWriter, req *http.Request, _ httprouter.Params){
-	var token goauth.GoogleToken
-	err := goauth.Recieve(res, req,"http://localhost:8080/login/google/oauth/recieve",GOOGLE_CLIENTID, GOOGLE_SECRETID,&token)
-	if err != nil { 
-		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time",http.StatusSeeOther)
-		return	
-	}
-	info,err := token.AccountInfo(req)		
-	if err != nil {
-		http.Redirect(res,req,PATH_AUTH_Login+"/?ErrorResponse=Unable to Fetch Credentials at This Time (2)",http.StatusSeeOther)
-		return		
-	}
-	OAuthLogin(req,res,info.Email,info.FirstName,info.LastName,token.State)
 }

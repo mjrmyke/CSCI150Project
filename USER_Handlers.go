@@ -2,10 +2,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
-
-	"google.golang.org/appengine/log"
 
 	"github.com/julienschmidt/httprouter"
 	"google.golang.org/appengine"
@@ -13,7 +12,7 @@ import (
 
 func INIT_USERS_HANDLERS(r *httprouter.Router) {
 	r.GET(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
-	r.POST(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
+	r.POST(PATH_USERS_ProfileEdit, USERS_POST_ProfileEdit)
 	r.GET(PATH_USERS_ProfileView, USERS_GET_ProfileView)
 }
 
@@ -26,18 +25,19 @@ const (
 // Profile
 //===========================================================================
 func USERS_GET_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	if MustLogin(res, req) {
-		return
-	}
-	ctx := appengine.NewContext(req)
-	log.Infof(ctx, "Request query string is: %s", req.URL.Query())
-	ServeTemplateWithParams(res, "profile", struct {
+	u, _ := GetUserFromSession(req)
+	err := ServeTemplateWithParams(res, "profile-settings", struct {
 		HeaderData
 		ErrorResponseProfile string
+		User *User
 	}{
 		*MakeHeader(res, req, true, true),
 		req.FormValue("ErrorResponseProfile"),
+		u,
 	})
+	if err != nil {
+		fmt.Fprint(res,err)
+	}
 }
 
 // TODO: Implement

@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
-<!--{{define "profile-settings"}}-->
+{{define "profile-settings"}}
 <html lang="en">
 <head>
     <title>profile-settings</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/assets/css/profile-settings.css">
+    <link rel="stylesheet" href="assets/css/profile-settings.css">
     </head>
 
 <h1 class="page-header">Edit Profile</h1>
@@ -19,7 +19,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="text-center">
           
-        <img class="displayed"  href="public/assets/images/user-pro.png" class="avatar img-circle img-thumbnail" alt="avatar">
+        <img class="displayed"  href="assets/images/user-pro.png" class="avatar img-circle img-thumbnail" alt="avatar">
           
         <h6>Upload a different photo...</h6>
           <div class="for1">
@@ -42,20 +42,20 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">First name:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="{{ .User.First }}" type="text">
+            <input class="form-control" value="{{.User.First}}" name="first" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Last name:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="{{.User.Last}}" type="text">
+            <input class="form-control" value="{{.User.Last}}" name="last" type="text">
           </div>
         </div>
        
         <div class="form-group">
-          <label class="col-lg-3 control-label">BIO:</label>
+          <label class="col-lg-3 control-label">Bio:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="{{.User.BIO}}" type="text">
+            <input class="form-control" value="{{.User.Bio}}" name="bio" type="text">
           </div>
         </div>
          <div class="form-group">
@@ -72,4 +72,4 @@
 
     </body>
 </html>
-<!--{{end}}-->
+{{end}}

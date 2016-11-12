@@ -17,7 +17,7 @@
 {{ template "header" .}}
 <body>
 <div id="edit"> <a href="/edit/{{.Notekey}}">Edit</a><br>
-Note Owned by: {{.User.First}} {{.User.Last}}
+<a href = "/profile/{{.Owner.IntID}}"> Note Owned by: {{.Owner.First}} {{.Owner.Last}} </a>
  </div>
 <div class="box">
 <div id="doctitle">

@@ -108,13 +108,19 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 		return
 	}
 
-	Body := template.HTML(ViewContent.Content)
+	owner, err := GetUserFromID(ctx, ViewNote.OwnerID)
+	if ErrorPage(ctx, res, nil, "Internal Server Error (x)", err, http.StatusSeeOther) {
+		return
+	}
+
+	tempcontent := parse(ViewContent.Content)
+	Body := template.HTML(tempcontent)
 
 	ServeTemplateWithParams(res, "viewNote", struct {
 		HeaderData
 		ErrorResponse, RedirectURL, Title, Notekey string
 		Content                                    template.HTML
-		User                                       *User
+		User, Owner                                *User
 	}{
 		HeaderData:    *MakeHeader(res, req, false, true),
 		RedirectURL:   req.FormValue("redirect"),
@@ -123,6 +129,7 @@ func NOTES_GET_View(res http.ResponseWriter, req *http.Request, params httproute
 		Notekey:       NoteKeyStr,
 		Content:       Body,
 		User:          u,
+		Owner:         owner,
 	})
 
 }
@@ -153,7 +160,7 @@ func NOTES_GET_Editor(res http.ResponseWriter, req *http.Request, params httprou
 		http.Redirect(res, req, "/view/"+NoteKeyStr, http.StatusSeeOther)
 		return
 	}
-	
+
 	err = retrievable.GetEntity(ctx, ViewNote.ContentID, ViewContent)
 	if ErrorPage(ctx, res, nil, "Internal Server Error (2)", err, http.StatusSeeOther) {
 		return
@@ -187,6 +194,12 @@ func NOTES_POST_Editor(res http.ResponseWriter, req *http.Request, params httpro
 	data := req.FormValue("note")
 	title := req.FormValue("title")
 	notekey := req.FormValue("notekey")
+	protection := req.FormValue("protection")
+	log.Infof(ctx, "protections string is :", protection)
+	protbool, err := strconv.ParseBool(protection)
+	if ErrorPage(ctx, res, nil, "Internal Server Error (5)", err, http.StatusSeeOther) {
+		return
+	}
 
 	Note := &Note{}
 
@@ -204,7 +217,7 @@ func NOTES_POST_Editor(res http.ResponseWriter, req *http.Request, params httpro
 		http.Redirect(res, req, "/view/"+notekey, http.StatusSeeOther)
 		return
 	}
-	
+
 	Content := &Content{}
 
 	err = retrievable.GetEntity(ctx, Note.ContentID, Content)
@@ -212,11 +225,21 @@ func NOTES_POST_Editor(res http.ResponseWriter, req *http.Request, params httpro
 		return
 	}
 
-	Content.Content = data
+	tempcontent := parse(data)
+
+	Content.Content = tempcontent
 	Content.Title = title
+	if Note.OwnerID == int64(u.IntID) {
+		Note.Protected = protbool
+	}
+
+	_, err = retrievable.PlaceEntity(ctx, intkey, Note)
+	if ErrorPage(ctx, res, nil, "Internal Server Error (3)", err, http.StatusSeeOther) {
+		return
+	}
 
 	_, err = retrievable.PlaceEntity(ctx, Note.ContentID, Content)
-	if ErrorPage(ctx, res, nil, "Internal Server Error (2)", err, http.StatusSeeOther) {
+	if ErrorPage(ctx, res, nil, "Internal Server Error (4)", err, http.StatusSeeOther) {
 		return
 	}
 

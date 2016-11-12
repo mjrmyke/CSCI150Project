@@ -2,24 +2,27 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
-	"google.golang.org/appengine/log"
-
+	"github.com/Esseh/retrievable"
 	"github.com/julienschmidt/httprouter"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 )
 
 func INIT_USERS_HANDLERS(r *httprouter.Router) {
 	r.GET(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
-	r.POST(PATH_USERS_ProfileEdit, USERS_GET_ProfileEdit)
+	r.POST(PATH_USERS_ProfileEdit, USERS_POST_ProfileEdit)
+	r.POST(PATH_USERS_ProfileEditAvatar, USERS_POST_ProfileEditAvatar)
 	r.GET(PATH_USERS_ProfileView, USERS_GET_ProfileView)
 }
 
 const (
-	PATH_USERS_ProfileEdit = "/editprofile"
-	PATH_USERS_ProfileView = "/profile/:ID"
+	PATH_USERS_ProfileEdit       = "/editprofile"
+	PATH_USERS_ProfileEditAvatar = "/editprofileavatar"
+	PATH_USERS_ProfileView       = "/profile/:ID"
 )
 
 //===========================================================================
@@ -29,19 +32,59 @@ func USERS_GET_ProfileEdit(res http.ResponseWriter, req *http.Request, params ht
 	if MustLogin(res, req) {
 		return
 	}
-	ctx := appengine.NewContext(req)
-	log.Infof(ctx, "Request query string is: %s", req.URL.Query())
-	ServeTemplateWithParams(res, "profile", struct {
+	u, _ := GetUserFromSession(req)
+	err := ServeTemplateWithParams(res, "profile-settings", struct {
 		HeaderData
 		ErrorResponseProfile string
+		User                 *User
 	}{
 		*MakeHeader(res, req, true, true),
 		req.FormValue("ErrorResponseProfile"),
+		u,
 	})
+	if err != nil {
+		fmt.Fprint(res, err)
+	}
 }
 
 // TODO: Implement
-func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {}
+func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	u, _ := GetUserFromSession(req)
+	u.First = req.FormValue("first")
+	u.Last = req.FormValue("last")
+	u.Bio = req.FormValue("bio")
+	ctx := appengine.NewContext(req)
+	_, err := retrievable.PlaceEntity(ctx, u.IntID, u)
+	if ErrorPage(ctx, res, nil, "server error placing key", err, http.StatusBadRequest) {
+		return
+	}
+
+	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID), 10), http.StatusSeeOther)
+}
+
+// TODO: Implement
+func USERS_POST_ProfileEditAvatar(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	u, _ := GetUserFromSession(req)
+	ctx := appengine.NewContext(req)
+
+	rdr, hdr, err := req.FormFile("avatar")
+	if ErrorPage(ctx, res, nil, "upload image thingy", err, http.StatusBadRequest) {
+		return
+	}
+	defer rdr.Close()
+	u.Avatar = true
+	err2 := UploadAvatar(ctx, int64(u.IntID), hdr, rdr)
+	log.Infof(ctx, "error: ", err2)
+
+	if err2 != nil {
+		fmt.Fprint(res, err2)
+	}
+	_, err = retrievable.PlaceEntity(ctx, u.IntID, u)
+	if ErrorPage(ctx, res, nil, "server error placing key", err, http.StatusBadRequest) {
+		return
+	}
+	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID), 10), http.StatusSeeOther)
+}
 
 //===========================================================================
 // Profile View

@@ -100,14 +100,16 @@ func USERS_GET_ProfileView(res http.ResponseWriter, req *http.Request, params ht
 	if ErrorPage(ctx, res, u, "Not a valid user ID", getErr, http.StatusNotFound) {
 		return
 	}
+	log.Infof(ctx, "error ID: ", id)
 	notes, err := GetAllNotes(ctx, id)
+	log.Infof(ctx, "error: ", len(notes))
 	if ErrorPage(ctx, res, nil, "Internal Server Error", err, http.StatusSeeOther) {
 		return
 	}
 	screen := struct {
 		HeaderData
 		Data     *User
-		AllNotes []Note
+		AllNotes []NoteOutput
 	}{
 		*MakeHeader(res, req, true, true),
 		ci,

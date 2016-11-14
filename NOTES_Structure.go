@@ -5,6 +5,10 @@ import (
 	"google.golang.org/appengine/datastore"
 )
 
+var (
+	NoteTable = "NotePermissions"
+)
+
 // TODO: utilize
 type Note struct {
 	OwnerID int64 // owner of the note, can set permissions
@@ -18,7 +22,7 @@ type Content struct {
 
 // int64 Keys
 func (n *Note) Key(ctx context.Context, key interface{}) *datastore.Key {
-	return datastore.NewKey(ctx, "NotePermissions", "", key.(int64), nil)
+	return datastore.NewKey(ctx, NoteTable, "", key.(int64), nil)
 }
 func (n *Content) Key(ctx context.Context, key interface{}) *datastore.Key {
 	return datastore.NewKey(ctx, "NoteContents", "", key.(int64), nil)

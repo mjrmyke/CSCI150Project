@@ -51,12 +51,8 @@
 
 				<!-- Main -->
 					<div id="main">
-						{{range .AllNotes}}
-
-								{{template "note-card" (addCtx $.Ctx .)}}
-								{{template "note-card" (addCtx $.Ctx .)}}
-								{{template "note-card" (addCtx $.Ctx .)}}
-								{{template "note-card" (addCtx $.Ctx .)}}
+						{{range $i, $e := .AllNotes}}
+								{{template "note-card" $e}}
 
 						{{end}}
 					</div>
@@ -74,5 +70,5 @@
 			<script src="/public/assets/js/main.js"></script>
 
 	</body>
+	{{end}}
 </html>
-{{end}}

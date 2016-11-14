@@ -80,7 +80,6 @@ section#profile-picture-section {
 #profile #main {
     height: 100vh;
     border-radius: 0;
-    border: solid 1px white;
     background: none;
 }
 
@@ -104,4 +103,31 @@ img.user-avatar {
 #profile #user-edit a:hover {
     color: #969696;
     cursor: pointer;
+}
+
+#profile .note-card a {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+    font-size: 10vh;
+    border-bottom: none;
+}
+
+.note-card {
+    width: 20vw;
+    margin: 1rem;
+    height: 20vh;
+    background-color: white;
+    border-radius: 8px;
+}
+
+#profile #note-box {
+    height: 100%;
+    display: flex;
+}
+
+#profile #note-box span {
+    padding-left: 2rem;
+    font-size: 1rem;
 }

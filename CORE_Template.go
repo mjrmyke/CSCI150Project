@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	"cloud.google.com/go/datastore"
-
 	"regexp"
 
 	"github.com/Esseh/retrievable"
@@ -142,18 +140,4 @@ func monthfromtime(t time.Time) time.Month {
 //gets the Day from a submitted time.Time
 func dayfromtime(t time.Time) int {
 	return t.Day()
-}
-
-// Gets all the notes made my the user.
-func GetAllNotes(ctx context.Context, userID int64) ([]Course, error) {
-	q := datastore.NewQuery("Note").Filter("OwnerID =", userID)
-	res := []Note{}
-	keys, err := q.GetAll(ctx, &res)
-	if err != nil {
-		return nil, err
-	}
-	for i, key := range keys {
-		res[i].StoreKey(key)
-	}
-	return res, nil
 }

@@ -26,36 +26,39 @@
 					<header id="header" class="alt">
 						<section id="profile-picture-section">
 							{{ if .Data.Avatar }}
-							<label id="user-picture"></label>
+							<label id="user-picture">{{ template "user-avatar" .Data}}</label>
 							{{ else }}
 							<label id="user-picture" class="fa fa-user"></label>
 							{{ end }}
 							<label id="user-name">{{ .Data.First }} {{ .Data.Last }}</label>
 							<div id="seperator"></div>
+							{{ if (eq .Data.IntID .User.IntID)}}
+							<label id="user-edit"><a href="/editprofile">Edit Profile</a></label>
+							{{ end }}
 						</section>
+						{{ if .Data.Bio }}
 						<section id="profile-bio-section">
 							<label id="bio-tag">Biography:</label>
 							<div id="seperator"></div>
 							<label id="bio">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Nam at leo at turpis faucibus vulputate eget eget lorem. Suspendisse suscipit ut arcu sit amet sodales.
-								Ut mollis justo hendrerit risus elementum faucibus.
-								Suspendisse porttitor dui sit amet augue tempor, eu vulputate nisi pulvinar. In hac habitasse platea dictumst.
-								Maecenas maximus ipsum eget consequat viverra. Morbi viverra arcu quis ligula scelerisque, et pellentesque ex sodales.
-								Aenean ullamcorper vel metus nec placerat. Morbi nec euismod arcu, quis convallis mi.
-								Phasellus non libero sit amet neque lobortis posuere eu quis enim. Morbi eros neque, cursus eget nibh vitae, feugiat rhoncus ipsum.
-								Morbi tempus dignissim odio, fringilla efficitur mauris eleifend nec. Ut ut luctus leo.
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in tortor odio.
+								{{ .Data.Bio }}
 							</label>
 						</section>
+						{{ end }}
 
 
 					</header>
 
 				<!-- Main -->
 					<div id="main">
+						{{range .AllNotes}}
 
+								{{template "note-card" (addCtx $.Ctx .)}}
+								{{template "note-card" (addCtx $.Ctx .)}}
+								{{template "note-card" (addCtx $.Ctx .)}}
+								{{template "note-card" (addCtx $.Ctx .)}}
 
+						{{end}}
 					</div>
 
 			</div>

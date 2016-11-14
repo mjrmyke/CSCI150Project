@@ -2,7 +2,7 @@ section#profile-picture-section {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 50%;
+    width: 300px;
     height: 80vh;
     background-color: white;
     padding: 3em 1em;
@@ -49,13 +49,14 @@ section#profile-picture-section {
 
 #profile #profile-bio-section {
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     padding: 2rem;
     color: grey;
     border-radius: 10px;
     background-color: white;
-    margin: 3em;
+    margin: 3em 3em auto 3em;
 }
 
 #profile #bio-tag {
@@ -81,4 +82,26 @@ section#profile-picture-section {
     border-radius: 0;
     border: solid 1px white;
     background: none;
+}
+
+img.user-avatar {
+    border-radius: 100%;
+    width: 190px;
+}
+
+#profile #user-edit a {
+    border-bottom: solid 1px;
+    cursor: pointer;
+}
+
+#profile #user-edit {
+    margin: 1rem 0 0 0;
+    color: #adadad;
+    padding: 2px 20px;
+    border-radius: 8px;
+}
+
+#profile #user-edit a:hover {
+    color: #969696;
+    cursor: pointer;
 }

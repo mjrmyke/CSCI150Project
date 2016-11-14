@@ -80,6 +80,11 @@ body {
 #wrapper {
     padding: 7em 0;
 }
+#ErrorOnLogin{
+  color: red;
+  font-weight: bold;
+}
+
 
 .join {
     color: #636363;

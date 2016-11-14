@@ -25,8 +25,9 @@
       </ul>
       <div class="clr"><hr /></div>
       <div class="mail-text">Or login with your username and password:</div>
+      <br>
+      {{if eq .ErrorResponse ""}} {{else}}<div id= "ErrorOnLogin">  {{.ErrorResponse}}  </div> <br> {{end}}
       <div class="forms">
-
         <form action="" method="post" name="login">
             <input name="email" type="text" placeholder="Enter your Email..." size="70"  id="mail"/>
             <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>

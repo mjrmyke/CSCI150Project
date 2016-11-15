@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+{{define "user-profile"}}
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Project NoteOrious</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/user-profile.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+			{{ template "header" .}}
+		<!-- Wrapper -->
+		<div id="profile">
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<section id="profile-picture-section">
+							{{ if .Data.Avatar }}
+							<label id="user-picture">{{ template "user-avatar" .Data}}</label>
+							{{ else }}
+							<label id="user-picture" class="fa fa-user"></label>
+							{{ end }}
+							<label id="user-name">{{ .Data.First }} {{ .Data.Last }}</label>
+							<div id="seperator"></div>
+							{{ if (eq .Data.IntID .User.IntID)}}
+							<label id="user-edit"><a href="/editprofile">Edit Profile</a></label>
+							{{ end }}
+						</section>
+						{{ if .Data.Bio }}
+						<section id="profile-bio-section">
+							<label id="bio-tag">Biography:</label>
+							<div id="seperator"></div>
+							<label id="bio">
+								{{ .Data.Bio }}
+							</label>
+						</section>
+						{{ end }}
+
+
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+						{{range $i, $e := .AllNotes}}
+								{{template "note-card" $e}}
+
+						{{end}}
+					</div>
+
+			</div>
+		</div>
+
+		<!-- Scripts -->
+			<script src="/public/assets/js/jquery.min.js"></script>
+			<script src="/public/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/public/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/public/assets/js/skel.min.js"></script>
+			<script src="/public/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/public/assets/js/main.js"></script>
+
+	</body>
+	{{end}}
+</html>

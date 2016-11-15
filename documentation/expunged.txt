@@ -1,0 +1,267 @@
+/// These were expunged because they are irrelivant at the moment.
+/// However they will be recorded in case related implementation questions arise.
+//===========================================================================
+// Change Info
+//===========================================================================
+func USERS_POST_ChangeInfo(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	u, err := GetUserFromSession(req)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#", err, "Not Logged In") {
+		return
+	}
+	u.First = req.FormValue("firstName")
+	u.Last = req.FormValue("lastName")
+	// TODO: Make sure we can parse any date HTML element input.
+	newBirthday := req.FormValue("birthday")
+	if newBirthday != "" {
+		u.DOB, err = time.Parse("1/2/2006", newBirthday)
+		if DestinationWithErrorAt(res, req, PATH_USERS_GET_ProfileEdit+"#", err, "ErrorResponseProfile", "Bad Birthday Input") {
+			return
+		}
+	}
+	u.Bio = req.FormValue("user-bio")
+
+	ctx := appengine.NewContext(req)
+	log.Infof(ctx, "Bio is: %s\n", req.FormValue("user-bio"))
+	_, placeErr := retrievable.PlaceEntity(ctx, u.IntID, u)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#", placeErr, "Internal Server Error") {
+		return
+	}
+	http.Redirect(res, req, PATH_USERS_GET_ProfileEdit+"#", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Delete Account
+//===========================================================================
+func USERS_POST_DeleteAccount(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	u, err := GetUserFromSession(req)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit, err, "Not Logged In") {
+		return
+	}
+	ctx := appengine.NewContext(req)
+
+	err = ReqElevatedUserPerms(ctx, u.IntID, res, req)
+	if err != nil {
+		return
+	}
+
+	uid, err := GetUserIDFromLogin(ctx, req.FormValue("username"), req.FormValue("password"))
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit, err, "Bad Credentials") {
+		return
+	}
+	if int64(u.IntID) != uid {
+		DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit, ErrPasswordMatch, "Not Logged In")
+		return
+	}
+	err = retrievable.DeleteEntity(ctx, datastore.NewKey(ctx, LoginTable, req.FormValue("username"), 0, nil))
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit, err, "Internal Server Error") {
+		return
+	}
+	err = retrievable.DeleteEntity(ctx, u.Key(ctx, u.IntID))
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit, err, "Internal Server Error") {
+		return
+	}
+	DeleteCookie(res, "session")
+	http.Redirect(res, req, "/", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Change Password
+//===========================================================================
+func USERS_POST_Changepassword(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	u, _ := GetUserFromSession(req)
+	ctx := appengine.NewContext(req)
+	oldPass := req.FormValue("old-pass")
+	newPass := req.FormValue("new-pass")
+	newPassConfirm := req.FormValue("new-pass-confirm")
+	if newPass != newPassConfirm {
+		DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#password", ErrPasswordMatch, "Passwords Do Not Match")
+		return
+	}
+	err := ChangePassword(ctx, u.Email, oldPass, newPass)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#password", err, "Problem Changing Password, Try Again Later") {
+		return
+	}
+	http.Redirect(res, req, PATH_USERS_GET_ProfileEdit+"#password", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Change Avatar
+//===========================================================================
+func USERS_POST_Changeavatar(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	u, _ := GetUserFromSession(req)
+	ctx := appengine.NewContext(req)
+	rdr, hdr, err := req.FormFile("avatar")
+	defer rdr.Close()
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#", err, "Problem Recieving File") {
+		return
+	}
+	err = UploadAvatar(ctx, int64(u.IntID), hdr, rdr)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#", err, "Internal Server Error") {
+		return
+	}
+	u.Avatar = true
+	_, err = retrievable.PlaceEntity(ctx, u.IntID, u)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#", err, "Internal Server Error") {
+		return
+	}
+	http.Redirect(res, req, PATH_USERS_GET_ProfileEdit+"#", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Change Email
+//===========================================================================
+func USERS_POST_Changeemail(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	u, _ := GetUserFromSession(req)
+	ctx := appengine.NewContext(req)
+	if req.FormValue("email") == "" {
+		DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#email", ErrEmptyField, "Email Cannot be Empty")
+		return
+	}
+	oldEmail := u.Email
+	u.Email = req.FormValue("email")
+	err := ChangeEmail(ctx, oldEmail, req.FormValue("email"))
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#email", err, "Cannot Change Email At This Time, Try Again Later") {
+		return
+	}
+	_, err = retrievable.PlaceEntity(ctx, u.IntID, u)
+	if DestinationWithError(res, req, PATH_USERS_GET_ProfileEdit+"#email", err, "Internal Server Error") {
+		return
+	}
+	http.Redirect(res, req, PATH_USERS_GET_ProfileEdit+"#email", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Get Terms
+//===========================================================================
+func USERS_GET_Terms(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	ServeTemplateWithParams(res, "user-legal-terms", struct {
+		HeaderData
+	}{
+		HeaderData: *MakeHeader(res, req, true, true),
+	})
+}
+
+//===========================================================================
+// Delete All Sessions
+//===========================================================================
+func USERS_GET_DeleteAllSessions(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	ctx := appengine.NewContext(req)
+	currSesID, err := GetSessionID(req)
+	if ErrorPage(ctx, res, nil, "Unable to get session ID from cookie", err, http.StatusBadRequest) {
+		return
+	}
+	currSes, err := GetSession(ctx, currSesID)
+	if ErrorPage(ctx, res, nil, "Unable to get session from session ID", err, http.StatusBadRequest) {
+		return
+	}
+
+	err = DeleteAllOtherSessionsForUser(ctx, currSes.UserID, currSesID)
+	if ErrorPage(ctx, res, nil, "Unable to delete sessions", err, http.StatusInternalServerError) {
+		return
+	}
+	http.Redirect(res, req, "/sessions", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Delete Session
+//===========================================================================
+func USERS_GET_DeleteSession(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	ctx := appengine.NewContext(req)
+	u, err := GetUserFromSession(req)
+	if ErrorPage(ctx, res, nil, "Unable to get user account", err, http.StatusInternalServerError) {
+		return
+	}
+	id, err := strconv.ParseInt(params.ByName("ID"), 10, 64)
+	if ErrorPage(ctx, res, u, "Session ID must be an integer", err, http.StatusBadRequest) {
+		return
+	}
+	err = DeleteUserSession(ctx, int64(u.IntID), id)
+	if err == ErrNoSession {
+		ErrorPage(ctx, res, u, "Session does not exist", err, http.StatusInternalServerError)
+		return
+	} else if ErrorPage(ctx, res, u, "Unable to delete session", err, http.StatusInternalServerError) {
+		return
+	}
+	http.Redirect(res, req, "/sessions", http.StatusSeeOther)
+}
+
+//===========================================================================
+// Sessions
+//===========================================================================
+func USERS_GET_Sessions(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	if MustLogin(res, req) {
+		return
+	}
+	ctx := appengine.NewContext(req)
+	currSesID, err := GetSessionID(req)
+	if ErrorPage(ctx, res, nil, "Unable to get session ID from cookie", err, http.StatusBadRequest) {
+		return
+	}
+	currSes, err := GetSession(ctx, currSesID)
+	if ErrorPage(ctx, res, nil, "Unable to get session from session ID", err, http.StatusBadRequest) {
+		return
+	}
+	ss, err := GetAllSessionsForUser(ctx, currSes.UserID)
+	if ErrorPage(ctx, res, nil, "Error getting user sessions", err, http.StatusInternalServerError) {
+		return
+	}
+
+	for i, v := range ss {
+		if v.ID == currSes.ID {
+			ss = append(ss[:i], ss[i+1:]...)
+			break
+		}
+	}
+
+	ServeTemplateWithParams(res, "user-sessions", struct {
+		HeaderData
+		CurrentSession Session
+		OtherSessions  []Session
+	}{
+		HeaderData:     *MakeHeader(res, req, true, true),
+		CurrentSession: currSes,
+		OtherSessions:  ss,
+	})
+}
+
+//function to add users permission for Notes
+func AddNotePerms(ctx context.Context, owner, useridtoadd int64) {
+	owneridstr := strconv.FormatInt(owner, 10)
+	useridtoaddstr := strconv.FormatInt(useridtoadd, 10)
+	concatstr := owneridstr + useridtoaddstr
+	NoteStruct := &NotePermissions{
+		OwnerId: owner,
+	}
+	retrievable.PlaceInDatastore(ctx, concatstr, NoteStruct)
+}
+
+//function to remove users permission for Notes
+func RemoveNotePerms(ctx context.Context, owner, useridtoremove int64) error {
+	owneridstr := strconv.FormatInt(owner, 10)
+	useridtoremovestr := strconv.FormatInt(useridtoremove, 10)
+	concatstr := owneridstr + useridtoremovestr
+	err := retrievable.DeleteEntity(ctx, (&NotePermissions{}).Key(ctx, concatstr))
+	return err
+}
+//if a user has permission to view a note,
+//There will exist an entry in the db with the id of
+//NoteID concatenated to UserID
+//NOTEIDUSERID
+type NotePermissions struct {
+	OwnerId int64
+}

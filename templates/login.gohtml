@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{{define "login"}}
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/css/login.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body>
+{{ template "header"}}
+
+<div id="wrapper">
+  <div id="main">
+    <div id="login-left">
+      <div class="join">Login</div>
+      <div class="lock"></div>
+      <div class="clr"></div>
+      <div class="login-options">Choose one of the following login methods.</div>
+      <ul class="actions">
+        <li><a id="dropbox" href="/login/dropbox/oauth/send"><img src="assets/images/dropbox.svg" alt="" />Dropbox</a></li>
+        <li><a id="github" href="/login/github/oauth/send"><img src="assets/images/github.svg" alt="" />GitHub</a></li>
+        <!-- <li><a id="google" href="#"><img src="assets/images/google-plus.svg" alt="" />Google+</a></li> -->
+      </ul>
+      <div class="clr"><hr /></div>
+      <div class="mail-text">Or login with your username and password:</div>
+      <br>
+      {{if eq .ErrorResponse ""}} {{else}}<div id= "ErrorOnLogin">  {{.ErrorResponse}}  </div> <br> {{end}}
+      <div class="forms">
+        <form action="" method="post" name="login">
+            <input name="email" type="text" placeholder="Enter your Email..." size="70"  id="mail"/>
+            <input name="password" type="password" placeholder="Enter a password..." size="70"  id="password"/>
+            <input type="hidden" id="redirect" name="redirect" value="{{.RedirectURL}}">
+            <ul class="actions">
+              <li><input type="submit" value="Login"></li>
+              <li><a href="/register?redirect={{.CurrentPath}}" class="button">Sign up</a></li>
+            </ul>
+        </form>
+      </div>
+    </div>
+    <div id="login-right">
+      {{template "pencil"}}
+    </div>
+  </div>
+
+
+
+
+</div>
+</body>
+</html>
+{{end}}

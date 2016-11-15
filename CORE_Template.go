@@ -1,9 +1,16 @@
 package main
 
 import (
+	"bytes"
 	"html/template"
 	"net/http"
+	"strconv"
+	"time"
 
+	"regexp"
+
+	"github.com/Esseh/retrievable"
+	humanize "github.com/dustin/go-humanize" // russross markdown parser
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
 )
@@ -13,10 +20,24 @@ var tpl *template.Template
 
 func init() {
 	// Tie functions into template here with ... "functionName":theFunction,
-	funcMap := template.FuncMap{}
-	// Load up all templates.
+	funcMap := template.FuncMap{
+		"getAvatarURL":  getAvatarURL,
+		"getUser":       GetUserFromID,
+		"humanize":      humanize.Time,
+		"humanizeSize":  humanize.Bytes,
+		"monthfromtime": monthfromtime,
+		"yearfromtime":  yearfromtime,
+		"dayfromtime":   dayfromtime,
+		"findsvg":       FindSVG,
+		"findtemplate":  FindTemplate,
+		"inc":           Inc,
+		"addCtx":        addCtx,
+		"getDate":       getDate,
+		// "isOwner":       isOwner,
+		"parse": parse,
+	} // Load up all templates.
 	tpl = template.New("").Funcs(funcMap)
-	tpl = template.Must(tpl.ParseGlob("public/templates/*.gohtml"))
+	tpl = template.Must(tpl.ParseGlob("templates/*"))
 
 }
 
@@ -50,4 +71,73 @@ func MakeHeader(res http.ResponseWriter, req *http.Request, login, register bool
 	return &HeaderData{
 		login, register, appengine.NewContext(req), u, redirectURL,
 	}
+}
+
+/// Parses markdown to produce HTML.
+func parse(inp string) string {
+	// inp = strings.Replace(inp, `- [ ]`, `- <input type="checkbox">`, -1)         // Set Unchecked Checkbox
+	// inp = strings.Replace(inp, `- [x]`, `- <input type="checkbox" checked>`, -1) // Set Checked Checkbox
+	data := []byte(inp)                                    // Convert to Byte
+	regex, _ := regexp.Compile("[sS][cC][rR][iI][pP][tT]") // Escape Script Tag
+	data = regex.ReplaceAll(data, []byte("&#115;&#99;&#114;&#105;&#112;&#116;"))
+	regex2, _ := regexp.Compile("[iI][fF][rR][aA][mM][eE]") // Escape Iframe Tag
+	data = regex2.ReplaceAll(data, []byte("&#105;&#102;&#114;&#97;&#109;&#101;"))
+	// data = blackfriday.MarkdownCommon(data) // Get Common Markdown from russross's parser
+	return string(data)
+}
+
+func Inc(inp string) string {
+	i, _ := strconv.ParseInt(inp, 10, 64)
+	return strconv.FormatInt(i+1, 10)
+}
+
+//Finds corresponding SVG template
+func FindSVG(name string) (ret template.HTML, err error) {
+	buf := bytes.NewBuffer([]byte{})
+	err = tpl.ExecuteTemplate(buf, ("svg-" + name), nil)
+	ret = template.HTML(buf.String())
+	return
+}
+
+func FindTemplate(name string) (ret template.HTML, err error) {
+	buf := bytes.NewBuffer([]byte{})
+	err = tpl.ExecuteTemplate(buf, (name), nil)
+	ret = template.HTML(buf.String())
+	return
+}
+
+type contextData struct {
+	Ctx  context.Context
+	Data interface{}
+}
+
+func addCtx(ctx context.Context, data interface{}) *contextData {
+	return &contextData{
+		Ctx:  ctx,
+		Data: data,
+	}
+}
+
+func getDate(t time.Time) string {
+	return t.Format("2006-01-02")
+}
+
+// Gets the Avatar URL
+func getAvatarURL(userID retrievable.IntID) string {
+	return "https://storage.googleapis.com/" + gcsBucket + "/" + getAvatarPath(int64(userID))
+}
+
+//gets the Year from a submitted time.Time
+func yearfromtime(t time.Time) int {
+	return t.Year()
+}
+
+//gets the Month from a submitted time.Time
+func monthfromtime(t time.Time) time.Month {
+	return t.Month()
+}
+
+//gets the Day from a submitted time.Time
+func dayfromtime(t time.Time) int {
+	return t.Day()
 }

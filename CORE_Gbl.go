@@ -2,7 +2,7 @@
 package main
 
 const (
-	gcsBucket  = "http://csci150project.appspot.com/"
+	gcsBucket  = "csci150project.appspot.com"
 	DomainPath = "http://localhost:8080/"
 	// TODO Change this to a more random key value
 	HMAC_Key = "csci150project2016"

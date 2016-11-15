@@ -1,0 +1,9 @@
+{{define "user-avatar"}}
+{{if .Avatar}}
+<img src="{{getAvatarURL .IntID}}" alt="Avatar Image" class="user-avatar">
+{{else}}
+<svg class="user-avatar">
+  <use xlink:href="#svg-user"></use>
+</svg>
+{{end}}
+{{end}}

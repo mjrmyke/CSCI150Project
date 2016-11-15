@@ -47,7 +47,7 @@ func AUTH_GET_Login(res http.ResponseWriter, req *http.Request, params httproute
 		return
 	}
 
-	ServeTemplateWithParams(res, "login.gohtml", struct {
+	ServeTemplateWithParams(res, "login", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{
@@ -93,7 +93,7 @@ func AUTH_POST_Login(res http.ResponseWriter, req *http.Request, params httprout
 //=========================================================================================
 func AUTH_GET_ElevatedLogin(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 
-	ServeTemplateWithParams(res, "login.gohtml", struct {
+	ServeTemplateWithParams(res, "login", struct {
 		HeaderData
 		ErrorResponse, RedirectURL string
 	}{
@@ -167,7 +167,7 @@ func AUTH_GET_Register(res http.ResponseWriter, req *http.Request, params httpro
 		http.Redirect(res, req, "/"+req.FormValue("redirect"), http.StatusSeeOther)
 		return
 	}
-	ServeTemplateWithParams(res, "register.gohtml", struct {
+	ServeTemplateWithParams(res, "register", struct {
 		HeaderData
 		BusinessKey, ErrorResponse, RedirectURL string
 	}{
@@ -181,9 +181,8 @@ func AUTH_POST_Register(res http.ResponseWriter, req *http.Request, params httpr
 	ctx := appengine.NewContext(req)
 	nu := &User{ // Make the New User
 		Email:    strings.ToLower(req.FormValue("email")),
-		First:    req.FormValue("given-name"),
-		Last:     req.FormValue("family-name"),
-		Customer: "",
+		First:    req.FormValue("first"),
+		Last:     req.FormValue("last"),
 	}
 
 	password := req.FormValue("password")

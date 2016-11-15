@@ -1,0 +1,133 @@
+section#profile-picture-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    height: 80vh;
+    background-color: white;
+    padding: 3em 1em;
+    border-top: solid 50px #8171ad;
+}
+
+#profile #header {
+    padding: 4em 0 0 0;
+    display: flex;
+    height: 90vh;
+}
+
+#profile #user-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    height: 200px;
+    width: 200px;
+    font-size: 160px;
+    background-color: #adadad;
+    color: #e7ebec;
+    border: solid 5px;
+    border-radius: 100%;
+}
+
+#profile #user-name {
+    padding: 2rem 2rem .5rem 2rem;
+    color: #808080;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: left;
+    line-height: 2rem;
+    margin: 0;
+}
+
+#profile #seperator {
+    background-image: linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+    height: 2px;
+    width: 220px;
+}
+
+#profile #profile-bio-section {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    color: grey;
+    border-radius: 10px;
+    background-color: white;
+    margin: 3em 3em auto 3em;
+}
+
+#profile #bio-tag {
+    font-size: 1.5rem;
+    color: #656565;
+    font-family: sans-serif;
+    margin: .3rem;
+}
+
+#profile #bio {
+    font-weight: 100;
+    font-size: 1rem;
+    margin: 0;
+}
+
+#profile-bio-section #seperator {
+    margin-bottom: .3rem;
+    width: 100%;
+}
+
+#profile #main {
+    height: 100vh;
+    border-radius: 0;
+    background: none;
+}
+
+img.user-avatar {
+    border-radius: 100%;
+    width: 190px;
+}
+
+#profile #user-edit a {
+    border-bottom: solid 1px;
+    cursor: pointer;
+}
+
+#profile #user-edit {
+    margin: 1rem 0 0 0;
+    color: #adadad;
+    padding: 2px 20px;
+    border-radius: 8px;
+}
+
+#profile #user-edit a:hover {
+    color: #969696;
+    cursor: pointer;
+}
+
+#profile .note-card a {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+    font-size: 10vh;
+    border-bottom: none;
+}
+
+.note-card {
+    width: 20vw;
+    margin: 1rem;
+    height: 20vh;
+    background-color: white;
+    border-radius: 8px;
+}
+
+#profile #note-box {
+    height: 100%;
+    display: flex;
+}
+
+#profile #note-box span {
+    padding-left: 2rem;
+    font-size: 1rem;
+}

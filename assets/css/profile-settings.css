@@ -1,7 +1,21 @@
 body{
     background-color:transparent;
     display: block;
-   
+
+}
+
+.profile-settings {
+    display: flex;
+    padding-top: 15%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-settings .row {
+  display: flex;
+  width:100%;
+  justify-content: space-around;
+  align-items: center;
 }
 
 
@@ -30,14 +44,37 @@ h3{
 }
 .forfun{
     text-align: center;
-    
+
 }
 .for1{
     text-align: center;
-    
-    
+
+
 }
 .container{
     background: lightwhite;
-   
+
+}
+
+.col-lg-8 {
+    color: #656565;
+}
+
+input#avatar-input {
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+img.user-avatar {
+    height: 200px;
+    width: 200px;
+}
+
+label.col-lg-3.control-label {
+    margin: 1em;
 }

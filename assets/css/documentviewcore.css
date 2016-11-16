@@ -22,12 +22,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 
- body
- {
- 	font-family: arial, helvetica, freesans, sans-serif;
- 	font-size: 100%;
+ body{
  	color: #333;
- 	background-color: #ddd;
  }
 
 #nav{
@@ -36,7 +32,7 @@ h1,h2,h3,h4,h5,h6 {
  .box
  {
  	position: relative;
- 	width: 45vw;
+ 	width: 60vw;
  	padding: 50px;
  	margin: 0 auto;
  	background-color: #fff;

@@ -51,8 +51,25 @@
 
 				<!-- Main -->
 					<div id="main">
+						{{ $d := .Data}}
+						{{ $u := .User}}
 						{{range $i, $e := .AllNotes}}
-								{{template "note-card" $e}}
+						<div class="note-card">
+						<label id=note-box>
+						<a href="/view/{{$e.ID}}" class="icon fa-file-o"></a>
+						<span id="title">{{$e.Content.Title}}</span>
+						<div id="note-selections">
+						<a href="/view/{{$e.ID}}" class="note-select">View</a>
+						{{ if (and ($u.Email) (ne $e.Data.Protected true) ) }}
+						<a href="/edit/{{$e.ID}}" class="note-select">Edit</a>
+						{{else}}
+						{{ if (eq $d.IntID $u.IntID)}}
+						<a href="/edit/{{$e.ID}}" class="note-select">Edit</a>
+						{{end}}
+						{{end}}
+						</div>
+						</label>
+						</div>
 
 						{{end}}
 					</div>

@@ -1,7 +1,12 @@
 {{ define "note-card" }}
 <div class="note-card">
 <label id=note-box>
-<a href="/view/{{.ID}}" class="icon fa-file-o"><span>{{.Content.Title}}</span></a>
+<a href="/view/{{.ID}}" class="icon fa-file-o"></a>
+<span id="title">{{.Content.Title}}</span>
+<div id="note-selections">
+<a href="/view/{{.ID}}" class="note-select">View</a>
+<a href="/edit/{{.ID}}" class="note-select">{{.User.IntID}}</a>
+</div>
 </label>
 </div>
 

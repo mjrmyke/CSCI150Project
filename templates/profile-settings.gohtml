@@ -8,50 +8,38 @@
     <link rel="stylesheet" href="assets/css/profile-settings.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     </head>
-
-<h1 class="page-header">Edit Profile</h1>
 <body>
+{{ template "header" .}}
 
-
-<div class="container" style="padding-top: 60px;">
+<div class="profile-settings">
   <div class="row">
-    <!-- left column -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="text-center">
-
-        <img src="assets/images/user-pro.png" class="displayed" class="avatar img-circle img-thumbnail" alt="avatar">
-      </div>
-    </div>
     <!-- edit form column -->
-      <div class= "forfun">
-    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-      <div class="alert alert-info alert-dismissable">
-        <i class="fa fa-coffee"></i>
-      </div>
-          </div>
-          </div>
-      <h3>Personal info:</h3>
+    <div class= "change-avatar">
+      <h3>Avatar Image:</h3>
 
       <form id="edit-avatar-form" action="/editprofileavatar" method="POST"
       enctype="multipart/form-data">
-    <div id="avatar-info">
+      <div id="avatar-info">
       {{if .User.Avatar}}
-<img src="{{getAvatarURL .User.IntID}}" alt="Avatar Image" class="user-avatar">
-{{else}}
-<svg class="user-avatar">
-<use xlink:href="#svg-user"></use>
-</svg>
-{{end}}        <div class="button-container">
-            <label class="button blue-btn">
-              {{if .User.Avatar}}Change Avatar
-              {{else}}Upload Avatar
-              {{end}}
-                <input name="avatar" id="avatar-input" type="file" name="avatar"
-                       accept=".jpg,.png,.jpeg" onchange='this.form.submit();'>
-            </label>
-        </div>
+      <img src="{{getAvatarURL .User.IntID}}" alt="Avatar Image" class="user-avatar">
+      {{else}}
+      <svg class="user-avatar">
+        <use xlink:href="#svg-user"></use>
+      </svg>
+      {{end}}
     </div>
+  <div class="button-container">
+    <label class="button blue-btn">
+    {{if .User.Avatar}}
+    Change Avatar
+    {{else}}
+    Upload Avatar
+    {{end}}
+    <input name="avatar" id="avatar-input" type="file" name="avatar" accept=".jpg,.png,.jpeg" onchange='this.form.submit();'>
+    </label>
+  </div>
 </form>
+</div>
 
       <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
 	    <!-- <div class="for1">

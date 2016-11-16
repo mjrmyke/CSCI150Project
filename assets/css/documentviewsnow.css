@@ -5,7 +5,20 @@
  * Copyright (c) 2013, salesforce.com
  */
 
+ #edit a {
+     width: 300px;
+     color: #636363;
+     font-weight: bold;
+     border-radius: 8px;
+     padding: 1rem;
+     margin: 1rem;
+     background-color: white;
+     border:solid 0;
+ }
+
 #edit{
+  display:flex;
+  justify-content: center;
   text-align: center;
   margin: 10px;
   color: white;
@@ -35,17 +48,19 @@ h1, h2, h3, h4, h5, h6{
   padding: 0;
 }
 .box {
-  margin-top: 5vh;
-  box-sizing: border-box;
-  cursor: text;
-  line-height: 1.42;
-  height: auto;
-  outline: none;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  text-align: left;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+    margin-top: 5vh;
+    box-sizing: border-box;
+    cursor: text;
+    line-height: 1.42;
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+    outline: none;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 .box p,
 .box ol,

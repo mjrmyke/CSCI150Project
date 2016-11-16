@@ -13,6 +13,12 @@
     padding-right: 1rem;
 }
 
+nav img.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}
+
 li#first {
     width: 250px;
 }
@@ -74,7 +80,6 @@ svg#pencil {
 
 
 i#profile-picture {
-    padding: 0 1px 0 0;
     background-color: #adadad;
     color: #e7ebec;
     margin: 0;
@@ -106,7 +111,6 @@ i#profile-picture {
 .fa {
     font-size: 1.3rem;
     width: 50px;
-    padding-right: 30px;
 }
 
 a.animate {

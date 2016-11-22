@@ -3949,6 +3949,7 @@ $colors: #E74C3C, #0072B5, #2C3E50;
 		width: 64em;
 		max-width: calc(100% - 4em);
 		margin: 0 auto;
+    margin-bottom: 10rem;
 	}
 
 		@media screen and (max-width: 480px) {

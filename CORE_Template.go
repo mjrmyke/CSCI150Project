@@ -33,6 +33,8 @@ func init() {
 		"inc":           Inc,
 		"addCtx":        addCtx,
 		"getDate":       getDate,
+		"getMod":        modID,
+		"getUserInt":    userInt,
 		// "isOwner":       isOwner,
 		"parse": parse,
 	} // Load up all templates.
@@ -140,4 +142,12 @@ func monthfromtime(t time.Time) time.Month {
 //gets the Day from a submitted time.Time
 func dayfromtime(t time.Time) int {
 	return t.Day()
+}
+
+func modID(userID int64) int64 {
+	return (userID % 10)
+}
+
+func userInt(userID retrievable.IntID) int64 {
+	return int64(userID)
 }

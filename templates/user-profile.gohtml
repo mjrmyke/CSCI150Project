@@ -21,6 +21,7 @@
 		<!-- Wrapper -->
 		<div id="profile">
 			<div id="wrapper">
+				{{$num := .AvatarMod}}
 
 				<!-- Header -->
 					<header id="header" class="alt">
@@ -35,6 +36,7 @@
 							{{ if (eq .Data.IntID .User.IntID)}}
 							<label id="user-edit"><a href="/editprofile">Edit Profile</a></label>
 							{{ end }}
+							{{template "pencil" $num}}
 						</section>
 						{{ if .Data.Bio }}
 						<section id="profile-bio-section">

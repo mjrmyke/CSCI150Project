@@ -8,14 +8,20 @@
 */
 
 /* my changes */
+.logo svg#pencil {
+    width: 350px;
+    height: 350px;
+}
+
+
 #nav span.icon.fa-copy {
     font-size: 2rem;
     padding-right: 1rem;
 }
 
 nav img.user-avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 100%;
 }
 

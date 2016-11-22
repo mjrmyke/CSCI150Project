@@ -15,6 +15,24 @@ section#profile-picture-section {
     height: 90vh;
 }
 
+#note-box div {
+    display: flex;
+    align-items: center;
+}
+
+#note-box svg#pencil {
+    width: 90px;
+    height: 90px;
+}
+
+#header svg#pencil {
+    position: absolute;
+    top: 270;
+    height: 150px;
+    width: 150px;
+    left: 250;
+}
+
 #profile #user-picture {
     display: flex;
     align-items: center;

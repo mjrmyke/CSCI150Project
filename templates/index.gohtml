@@ -23,7 +23,13 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<span class="logo"><img src="assets/images/logo.svg" alt="" /></span>
+						{{if .User.Email}}
+						{{$mod := (getMod (getUserInt .User.IntID))}}
+						<span class="logo">{{template "pencil" $mod}}</span>
+						{{else}}
+						{{$mod := -1}}
+						<span class="logo">{{template "pencil" $mod}}</span>
+						{{end}}
 						<h1>NoteOrious</h1>
 						<p>A better way to create and share notes
 					</header>

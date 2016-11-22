@@ -106,14 +106,18 @@ func USERS_GET_ProfileView(res http.ResponseWriter, req *http.Request, params ht
 	if ErrorPage(ctx, res, nil, "Internal Server Error", err, http.StatusSeeOther) {
 		return
 	}
+
+	avatarMod := modID(id)
 	screen := struct {
 		HeaderData
-		Data     *User
-		AllNotes []NoteOutput
+		Data      *User
+		AllNotes  []NoteOutput
+		AvatarMod int64
 	}{
 		*MakeHeader(res, req, true, true),
 		ci,
 		notes,
+		avatarMod,
 	}
 	ServeTemplateWithParams(res, "user-profile", screen)
 }

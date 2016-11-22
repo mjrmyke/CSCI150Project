@@ -59,7 +59,7 @@ func USERS_POST_ProfileEdit(res http.ResponseWriter, req *http.Request, params h
 		return
 	}
 
-	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID), 10), http.StatusSeeOther)
+	http.Redirect(res, req, "/editprofile", http.StatusSeeOther)
 }
 
 // TODO: Implement
@@ -83,7 +83,7 @@ func USERS_POST_ProfileEditAvatar(res http.ResponseWriter, req *http.Request, pa
 	if ErrorPage(ctx, res, nil, "server error placing key", err, http.StatusBadRequest) {
 		return
 	}
-	http.Redirect(res, req, "/profile/"+strconv.FormatInt(int64(u.IntID), 10), http.StatusSeeOther)
+	http.Redirect(res, req, "/editprofile", http.StatusSeeOther)
 }
 
 //===========================================================================

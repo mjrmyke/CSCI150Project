@@ -1969,10 +1969,6 @@ $colors: #E74C3C, #0072B5, #2C3E50;
 			border-bottom-color: transparent;
 		}
 
-	strong, b {
-		font-weight: 400;
-	}
-
 	em, i {
 		font-style: italic;
 	}
@@ -2111,9 +2107,12 @@ $colors: #E74C3C, #0072B5, #2C3E50;
 		color: #ffffff;
 	}
 
-	strong, b {
-		color: #ffffff;
-	}
+  strong, b {
+    color: #000000;
+  }
+  strong, b {
+    font-weight: bold;
+  }
 
 	h1, h2, h3, h4, h5, h6 {
 		color: #ffffff;
